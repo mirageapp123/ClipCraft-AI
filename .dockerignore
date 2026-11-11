@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.github
+.cache
+.codex
+logs
+*.log
+native
+huggingface-space

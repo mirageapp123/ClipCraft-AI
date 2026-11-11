@@ -26,6 +26,7 @@ import {
   Scan,
   Scissors,
   Trash,
+  Translate,
   Waveform,
   X,
 } from "@phosphor-icons/react";
@@ -85,102 +86,84 @@ import { getVoiceCloneTestSentence, synthesizeBaseVoice } from "../lib/baseVoice
 
 export function LanguageIntro({ t, closing, onChoose, language = "en" }) {
   const [selected, setSelected] = useState(language);
-  const railRef = useRef(null);
   const preview = useMemo(() => createTranslator(selected), [selected]);
-
-  const scrollRail = (direction) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    rail.scrollBy({ left: direction * Math.max(rail.clientWidth * 0.7, 220), behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    const chip = railRef.current?.querySelector(`[data-language="${selected}"]`);
-    chip?.scrollIntoView({ block: "nearest", inline: "center" });
-  }, [selected]);
 
   return (
     <div
-      className={`language-intro ${closing ? "is-closing" : ""}`}
+      className={`language-intro language-intro-v2 ${closing ? "is-closing" : ""}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="entrance-title"
     >
-      <div className="entrance-panel">
-        <header className="entrance-brand">
-          <img
-            className="entrance-reel"
-            src="/icons/clipcraft-reel.jpg"
-            alt="ClipCraft film reel logo"
-            width="1041"
-            height="1081"
-            decoding="async"
-          />
-          <h1 id="entrance-title">ClipCraft</h1>
-          <p>{preview("entranceTagline")}</p>
+      <div className="lang-shell">
+        <header className="lang-brand-panel">
+          <div className="lang-brand-row">
+            <img
+              className="lang-brand-reel"
+              src="/icons/clipcraft-reel.jpg"
+              alt="ClipCraft film reel logo"
+              width="1041"
+              height="1081"
+              decoding="async"
+            />
+            <div className="lang-brand-copy">
+              <h1 id="entrance-title">ClipCraft</h1>
+              <p>{preview("entranceTagline")}</p>
+            </div>
+          </div>
+          <div className="lang-script-cloud" aria-hidden="true">
+            {APP_LANGUAGES.filter((item) => item.id !== "en").map((item) => (
+              <span key={item.id}>{item.nativeName}</span>
+            ))}
+          </div>
         </header>
 
-        <section className="entrance-language" aria-labelledby="entrance-language-title">
-          <h2 id="entrance-language-title">{preview("preferredLanguage")}</h2>
-          <p className="entrance-language-hint">{preview("preferredLanguageHint")}</p>
-          <div className="entrance-lang-scroller">
-            <button
-              type="button"
-              className="entrance-lang-nav"
-              onClick={() => scrollRail(-1)}
-              aria-label={preview("previousLanguages")}
-            >
-              <CaretLeft size={16} weight="bold" />
-            </button>
-            <div
-              className="entrance-lang-track"
-              ref={railRef}
-              role="listbox"
-              aria-label={preview("preferredLanguage")}
-              onWheel={(event) => {
-                if (!railRef.current) return;
-                if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) railRef.current.scrollLeft += event.deltaY;
-              }}
-            >
-              {APP_LANGUAGES.map((item) => {
-                const isSelected = item.id === selected;
-                return (
-                  <button
-                    type="button"
-                    key={item.id}
-                    data-language={item.id}
-                    role="option"
-                    aria-selected={isSelected}
-                    className={`entrance-lang-chip ${isSelected ? "is-selected" : ""}`}
-                    onClick={() => setSelected(item.id)}
-                  >
+        <section className="lang-card" aria-labelledby="entrance-language-title">
+          <div className="lang-card-head">
+            <span className="lang-card-icon">
+              <Translate size={20} weight="duotone" aria-hidden="true" />
+            </span>
+            <div>
+              <h2 id="entrance-language-title">{preview("preferredLanguage")}</h2>
+              <p>{preview("preferredLanguageHint")}</p>
+            </div>
+          </div>
+
+          <div className="lang-card-grid" role="listbox" aria-label={preview("preferredLanguage")}>
+            {APP_LANGUAGES.map((item) => {
+              const isSelected = item.id === selected;
+              return (
+                <button
+                  type="button"
+                  key={item.id}
+                  data-language={item.id}
+                  role="option"
+                  aria-selected={isSelected}
+                  className={`lang-card-option ${isSelected ? "is-selected" : ""}`}
+                  onClick={() => setSelected(item.id)}
+                >
+                  <span className="lang-card-option-copy">
                     <strong>{item.nativeName}</strong>
                     <span>{item.id === "en" ? preview("languageDefault") : item.name}</span>
-                    {isSelected ? (
-                      <i className="entrance-lang-check" aria-hidden="true"><Check size={11} weight="bold" /></i>
-                    ) : null}
-                  </button>
-                );
-              })}
-            </div>
-            <button
-              type="button"
-              className="entrance-lang-nav"
-              onClick={() => scrollRail(1)}
-              aria-label={preview("nextLanguages")}
-            >
+                  </span>
+                  {isSelected ? (
+                    <i className="lang-card-check" aria-hidden="true">
+                      <Check size={11} weight="bold" />
+                    </i>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+
+          <footer className="lang-card-foot">
+            <button type="button" className="lang-continue" onClick={() => onChoose(selected)}>
+              {preview("entranceContinue")}
               <CaretRight size={16} weight="bold" />
             </button>
-          </div>
+            <small>{preview("languageSaved")}</small>
+          </footer>
         </section>
-
-        <footer className="entrance-actions">
-          <button type="button" className="entrance-continue" onClick={() => onChoose(selected)}>
-            {preview("entranceContinue")}
-            <CaretRight size={16} weight="bold" />
-          </button>
-          <small className="entrance-footnote">{preview("languageSaved")}</small>
-        </footer>
       </div>
     </div>
   );
@@ -1378,7 +1361,6 @@ export function ToolPanel(props) {
             onSubmit={(event) => { event.preventDefault(); commitCaptionStyleName(); }}
           >
             <input
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               type="text"
               aria-label={t("captionStyleNamePrompt")}

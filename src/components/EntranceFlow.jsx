@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
+  ArrowRight,
   ArrowSquareOut,
   Check,
   CopySimple,
@@ -7,6 +8,7 @@ import {
   Eye,
   EyeSlash,
   LockSimple,
+  ShieldCheck,
   SpinnerGap,
   User,
   WarningCircle,
@@ -38,30 +40,6 @@ function GoogleMark() {
       <path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1-.76-4.59c0-1.6.27-3.14.76-4.59l-7.98-6.19A23.94 23.94 0 0 0 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
       <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
     </svg>
-  );
-}
-
-function ClipCraftWordmark({ id }) {
-  return (
-    <>
-      <h1 id={id} className="entrance-wordmark"><span>ClipCraft</span> <em>AI</em></h1>
-      <svg className="entrance-swoosh" viewBox="0 0 360 22" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="clipcraft-swoosh-gradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#2a6dff" />
-            <stop offset="55%" stopColor="#4f6bff" />
-            <stop offset="100%" stopColor="#c026ff" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M3 5.5C70 17.5 250 20.5 357 3.5"
-          fill="none"
-          stroke="url(#clipcraft-swoosh-gradient)"
-          strokeWidth="3.4"
-          strokeLinecap="round"
-        />
-      </svg>
-    </>
   );
 }
 
@@ -252,6 +230,7 @@ export function AuthScreen({ onAuthenticated }) {
   const [notice, setNotice] = useState("");
   const [googleFix, setGoogleFix] = useState("");
   const [googleSetupOpen, setGoogleSetupOpen] = useState(false);
+  const emailRef = useRef(null);
   const isCreate = mode === "create";
 
   useEffect(() => {
@@ -350,122 +329,172 @@ export function AuthScreen({ onAuthenticated }) {
     setGoogleFix("");
   };
 
+  const focusEmail = (nextMode) => {
+    setMode(nextMode);
+    setError("");
+    setNotice("");
+    setGoogleFix("");
+    window.requestAnimationFrame(() => emailRef.current?.focus());
+  };
+
   return (
-    <div className="auth-screen" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div className="auth-screen auth-landing" role="dialog" aria-modal="true" aria-labelledby="auth-title">
       <div className="auth-backdrop" aria-hidden="true" />
 
-      <section className="auth-card">
-        <header className="auth-brand">
-          <img
-            src="/icons/clipcraft-reel.jpg"
-            alt="ClipCraft film reel logo"
-            width="1041"
-            height="1081"
-            decoding="async"
-          />
-          <ClipCraftWordmark id="auth-title" />
+      <div className="auth-landing-shell">
+        <header className="auth-landing-nav">
+          <div className="auth-landing-brand">
+            <img src="/icons/clipcraft-reel.jpg" alt="" width="1041" height="1081" decoding="async" />
+            <span className="auth-landing-wordmark">ClipCraft <em>AI</em></span>
+          </div>
+          <div className="auth-landing-actions">
+            <button type="button" className="auth-nav-ghost" onClick={() => focusEmail("signin")}>Sign in</button>
+            <button type="button" className="auth-nav-cta" onClick={() => focusEmail("create")}>Start free</button>
+          </div>
         </header>
 
-        <form className="auth-form" onSubmit={submit} noValidate aria-busy={Boolean(busy)}>
-          <div className="auth-field">
-            <EnvelopeSimple size={20} weight="regular" aria-hidden="true" />
-            <label className="sr-only" htmlFor="auth-email">Email ID</label>
-            <input
-              id="auth-email"
-              type="email"
-              name="email"
-              value={email}
-              placeholder="Email ID"
-              autoComplete="email"
-              autoFocus
-              inputMode="email"
-              spellCheck="false"
-              disabled={Boolean(busy)}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </div>
-
-          <div className="auth-field">
-            <LockSimple size={20} weight="regular" aria-hidden="true" />
-            <label className="sr-only" htmlFor="auth-password">Password</label>
-            <input
-              id="auth-password"
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              placeholder="Password"
-              autoComplete={isCreate ? "new-password" : "current-password"}
-              disabled={Boolean(busy)}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-            <button
-              type="button"
-              className="auth-eye"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              aria-pressed={showPassword}
-              onClick={() => setShowPassword((visible) => !visible)}
-            >
-              {showPassword ? <Eye size={20} /> : <EyeSlash size={20} />}
-            </button>
-          </div>
-
-          {error ? (
-            <div className="auth-message is-error" role="alert">
-              <WarningCircle size={16} weight="fill" aria-hidden="true" />
-              <span>{error}</span>
-              {googleFix === "setup" ? (
-                <button type="button" className="auth-message-action" onClick={() => setGoogleSetupOpen(true)}>
-                  Google setup
-                </button>
-              ) : null}
-              {googleFix === "signin" ? (
-                <button
-                  type="button"
-                  className="auth-message-action"
-                  onClick={() => window.open("https://accounts.google.com/", "_blank", "noopener,noreferrer")}
-                >
-                  Sign in to Google
-                </button>
-              ) : null}
-            </div>
-          ) : null}
-          {notice ? (
-            <p className="auth-message is-notice" role="status">
-              <WarningCircle size={16} weight="fill" aria-hidden="true" />
-              <span>{notice}</span>
+        <main className="auth-landing-grid">
+          <section className="auth-hero">
+            <span className="auth-hero-eyebrow"><i aria-hidden="true" />Browser-native AI video editor</span>
+            <h1 className="auth-hero-title">Edit video with <span>AI</span>,<br />right in your browser.</h1>
+            <p className="auth-hero-lede">
+              Turn images, clips and ideas into polished videos. <strong>Local AI effects</strong>,
+              automatic captions and <strong>watermark-free 4K export</strong> — all on your device.
             </p>
-          ) : null}
 
-          <button className="auth-submit" type="submit" disabled={Boolean(busy)}>
-            {busy === "email" ? <SpinnerGap className="is-spinning" size={19} weight="bold" aria-hidden="true" /> : null}
-            {isCreate ? "Create an account" : "Sign in"}
-          </button>
-        </form>
+            <div className="auth-hero-cta">
+              <button type="button" className="auth-hero-primary" onClick={() => focusEmail("create")}>
+                Start creating
+                <ArrowRight size={17} weight="bold" aria-hidden="true" />
+              </button>
+              <button type="button" className="auth-hero-secondary" onClick={continueWithGuest} disabled={Boolean(busy)}>
+                <User size={17} weight="regular" aria-hidden="true" />
+                Continue as guest
+              </button>
+            </div>
 
-        <div className="auth-divider" aria-hidden="true"><span>or</span></div>
+            <div className="auth-hero-chips">
+              <span className="auth-chip"><i aria-hidden="true" />On-device AI</span>
+              <span className="auth-chip"><i aria-hidden="true" />No uploads</span>
+              <span className="auth-chip"><i aria-hidden="true" />No watermark</span>
+              <span className="auth-chip"><i aria-hidden="true" />4K export</span>
+            </div>
 
-        <button
-          type="button"
-          className="auth-google"
-          onClick={continueWithGoogle}
-          disabled={Boolean(busy)}
-        >
-          {busy === "google"
-            ? <SpinnerGap className="is-spinning" size={20} weight="bold" aria-hidden="true" />
-            : <GoogleMark />}
-          Continue with Google
-        </button>
+            <div className="auth-hero-proof">
+              <span className="auth-proof-dots" aria-hidden="true"><i /><i /><i /></span>
+              <span><strong>Free to use</strong> · No credit card · Works offline after first load</span>
+            </div>
+          </section>
 
-        <button type="button" className="auth-guest" onClick={continueWithGuest} disabled={Boolean(busy)}>
-          <User size={20} weight="regular" />
-          Continue as guest
-        </button>
+          <section className="auth-panel">
+            <div className="auth-card">
+              <h2 id="auth-title">Welcome to ClipCraft</h2>
+              <p className="auth-card-sub">Sign in to save projects, or jump in as a guest.</p>
 
-        <footer className="auth-switch">
-          <span>{isCreate ? "Already have an account?" : "New to ClipCraft?"}</span>
-          <button type="button" onClick={switchMode}>{isCreate ? "Sign in" : "Create an account"}</button>
-        </footer>
-      </section>
+              <button type="button" className="auth-google" onClick={continueWithGoogle} disabled={Boolean(busy)}>
+                {busy === "google"
+                  ? <SpinnerGap className="is-spinning" size={20} weight="bold" aria-hidden="true" />
+                  : <GoogleMark />}
+                Continue with Google
+              </button>
+
+              <div className="auth-divider" aria-hidden="true"><span>or continue with email</span></div>
+
+              <form className="auth-form" onSubmit={submit} noValidate aria-busy={Boolean(busy)}>
+                <div className="auth-field">
+                  <EnvelopeSimple size={20} weight="regular" aria-hidden="true" />
+                  <label className="sr-only" htmlFor="auth-email">Email ID</label>
+                  <input
+                    id="auth-email"
+                    ref={emailRef}
+                    type="email"
+                    name="email"
+                    value={email}
+                    placeholder="Email address"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck="false"
+                    disabled={Boolean(busy)}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </div>
+
+                <div className="auth-field">
+                  <LockSimple size={20} weight="regular" aria-hidden="true" />
+                  <label className="sr-only" htmlFor="auth-password">Password</label>
+                  <input
+                    id="auth-password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={password}
+                    placeholder="Password"
+                    autoComplete={isCreate ? "new-password" : "current-password"}
+                    disabled={Boolean(busy)}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="auth-eye"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-pressed={showPassword}
+                    onClick={() => setShowPassword((visible) => !visible)}
+                  >
+                    {showPassword ? <Eye size={20} /> : <EyeSlash size={20} />}
+                  </button>
+                </div>
+
+                {error ? (
+                  <div className="auth-message is-error" role="alert">
+                    <WarningCircle size={16} weight="fill" aria-hidden="true" />
+                    <span>{error}</span>
+                    {googleFix === "setup" ? (
+                      <button type="button" className="auth-message-action" onClick={() => setGoogleSetupOpen(true)}>
+                        Google setup
+                      </button>
+                    ) : null}
+                    {googleFix === "signin" ? (
+                      <button
+                        type="button"
+                        className="auth-message-action"
+                        onClick={() => window.open("https://accounts.google.com/", "_blank", "noopener,noreferrer")}
+                      >
+                        Sign in to Google
+                      </button>
+                    ) : null}
+                  </div>
+                ) : null}
+                {notice ? (
+                  <p className="auth-message is-notice" role="status">
+                    <WarningCircle size={16} weight="fill" aria-hidden="true" />
+                    <span>{notice}</span>
+                  </p>
+                ) : null}
+
+                <button className="auth-submit" type="submit" disabled={Boolean(busy)}>
+                  {busy === "email" ? <SpinnerGap className="is-spinning" size={19} weight="bold" aria-hidden="true" /> : null}
+                  {isCreate ? "Create an account" : "Sign in"}
+                </button>
+              </form>
+
+              <button type="button" className="auth-guest" onClick={continueWithGuest} disabled={Boolean(busy)}>
+                <User size={19} weight="regular" aria-hidden="true" />
+                Continue as guest
+              </button>
+
+              <footer className="auth-switch">
+                <span>{isCreate ? "Already have an account?" : "New to ClipCraft?"}</span>
+                <button type="button" onClick={switchMode}>{isCreate ? "Sign in" : "Create an account"}</button>
+              </footer>
+
+              <div className="auth-privacy">
+                <ShieldCheck size={13} weight="bold" aria-hidden="true" />
+                <span>Your files never leave this device.</span>
+                <a href="/privacy-policy">Privacy Policy</a>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
 
       {googleSetupOpen ? (
         <GoogleSetupDialog

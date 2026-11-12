@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Idea 2 — Right action center</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="stage">
+  <div class="screen">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">▶</span>
+        <span class="wordmark">ClipCraft</span>
+        <span class="proj">Untitled project</span>
+        <span class="saved"><b></b>Saved just now</span>
+      </div>
+      <div class="spacer"></div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="btn">↺ Undo</button>
+        <button class="btn">↻ Redo</button>
+        <button class="btn ghost">＋ Import</button>
+        <button class="btn export">⤓ Export video</button>
+        <button class="btn icon">⚙</button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <nav class="rail">
+        <div class="rail-item active"><span class="ico">▤</span>Media</div>
+        <div class="rail-item"><span class="ico">CC</span>Captions</div>
+        <div class="rail-item"><span class="ico">✦</span>Smart</div>
+        <div class="rail-item"><span class="ico">♫</span>Audio</div>
+        <div class="rail-item"><span class="ico">✧</span>Effects</div>
+        <div class="rail-item"><span class="ico">✚</span>Plugins</div>
+        <div class="rail-item"><span class="ico">☺</span>Stickers</div>
+      </nav>
+
+      <aside class="media panel">
+        <div class="media-head">
+          <span class="h">Media</span>
+          <span class="chip">12 items</span>
+        </div>
+        <div class="tabs">
+          <div class="on">Upload</div>
+          <div>Library</div>
+          <div>My assets</div>
+        </div>
+        <div class="upload" style="padding:16px 12px;">
+          <div class="up-ico" style="width:36px;height:36px;">☁↑</div>
+          <strong>Click or drop media</strong>
+          <span>JPG · PNG · MP4 · WebM · MOV · MP3</span>
+        </div>
+        <div class="asset-grid">
+          <div class="asset"><em>clip-01.mp4</em></div>
+          <div class="asset"><em>frame.png</em></div>
+          <div class="asset"><em>logo.svg</em></div>
+          <div class="asset"><em>music.mp3</em></div>
+          <div class="asset"><em>b-roll.mp4</em></div>
+          <div class="asset"><em>title.png</em></div>
+        </div>
+      </aside>
+
+      <section class="center">
+        <div class="preview-head">
+          <span class="label">Preview</span>
+          <span class="chip">16:9 · 1920 × 1080</span>
+          <span class="spacer"></span>
+          <span class="chip">Fit</span>
+          <span class="chip">⌗ Grid</span>
+        </div>
+        <div class="canvas-wrap">
+          <div class="grid-lines"></div>
+          <div class="empty-frame" style="width:min(72%,700px);">
+            <span class="kicker">Start a project</span>
+            <div class="big">☁↑</div>
+            <strong>Upload image or video to start editing</strong>
+            <p>Timeline starts empty by default</p>
+          </div>
+          <div class="float-transport">
+            <div class="tbtn">⏮</div>
+            <div class="tbtn play">▶</div>
+            <div class="tbtn">⏭</div>
+            <span class="tclock">00:00:00 <em>/ 00:04.00</em></span>
+          </div>
+        </div>
+      </section>
+
+      <aside style="display:flex;flex-direction:column;gap:10px;flex:0 0 300px;min-height:0;">
+        <div class="inspector panel" style="flex:1.05 1 0;padding:12px;">
+          <div class="insp-head">
+            <span class="h">Inspector</span>
+            <span class="chip">Visuals</span>
+          </div>
+          <div class="insp-tabs">
+            <div class="on">Basic</div>
+            <div>Mask</div>
+            <div>Color</div>
+            <div>Anim</div>
+          </div>
+          <div class="insp-empty" style="gap:6px;">
+            <div class="ico" style="width:46px;height:46px;font-size:18px;">▣</div>
+            <strong>Select a clip</strong>
+            <span>Timeline clips show their properties here.</span>
+          </div>
+        </div>
+
+        <div class="panel" style="flex:.95 1 0;padding:12px;display:flex;flex-direction:column;min-height:0;">
+          <div class="insp-head" style="padding-bottom:8px;">
+            <span class="h">Quick actions</span>
+            <span class="chip">Live</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;">
+            <div style="grid-column:1 / -1;display:flex;align-items:center;justify-content:center;gap:9px;height:46px;border-radius:10px;color:#fff;font-size:12px;font-weight:750;background:linear-gradient(135deg,#2a6dff,#7c4dff);box-shadow:0 10px 24px rgba(55,98,255,.34);">▶ Play <span style="color:rgba(255,255,255,.6);font-size:8.5px;font-weight:600;">SPACE</span></div>
+            <div class="qa">✂<span>Cut</span></div>
+            <div class="qa">⌁<span>Ripple</span></div>
+            <div class="qa">◉<span>Marker</span></div>
+            <div class="qa">⧉<span>Duplicate</span></div>
+            <div class="qa">⛶<span>Fit</span></div>
+            <div class="qa">⌗<span>Grid</span></div>
+            <div class="qa">🔗<span>Link</span></div>
+            <div class="qa">↺<span>Undo</span></div>
+            <div class="qa">⛶<span>Full</span></div>
+          </div>
+          <div style="margin-top:auto;padding-top:8px;border-top:1px solid rgba(128,170,255,.09);display:flex;align-items:center;justify-content:space-between;color:#7d93af;font-size:9px;">
+            <span>Selected: none</span><span>⌘K Commands</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="timeline" style="flex-basis:214px;">
+      <div class="tl-head">
+        <span class="tl-title">Timeline</span>
+        <button class="tl-btn on">⌗ Snap</button>
+        <button class="tl-btn">＋ Track</button>
+        <span class="spacer"></span>
+        <span class="chip" style="margin-right:6px;">10s</span>
+        <button class="tl-btn">－</button>
+        <button class="tl-btn">＋</button>
+        <button class="tl-btn">⛶ Fit</button>
+      </div>
+      <div class="tl-body">
+        <div class="track-labels">
+          <div class="tl-ruler" style="position:relative;">
+            <div class="tick" style="left:0"><span>00:00</span></div>
+            <div class="tick" style="left:90px"><span>00:01</span></div>
+            <div class="tick" style="left:180px"><span>00:02</span></div>
+          </div>
+          <div class="track-label on"><span class="grip">⋮⋮</span>👁 Visuals</div>
+          <div class="track-label"><span class="grip">⋮⋮</span>👁 Captions 1</div>
+          <div class="track-label"><span class="grip">⋮⋮</span>👁 Overlay</div>
+          <div class="track-label"><span class="grip">⋮⋮</span>👁 Music</div>
+        </div>
+        <div class="lanes">
+          <div class="tl-ruler">
+            <div class="tick" style="left:56px"><span>00:00</span></div>
+            <div class="tick" style="left:146px"><span>00:01</span></div>
+            <div class="tick" style="left:236px"><span>00:02</span></div>
+            <div class="tick" style="left:326px"><span>00:03</span></div>
+            <div class="tick" style="left:416px"><span>00:04</span></div>
+            <div class="tick" style="left:506px"><span>00:05</span></div>
+            <div class="tick" style="left:596px"><span>00:06</span></div>
+            <div class="tick" style="left:686px"><span>00:07</span></div>
+            <div class="tick" style="left:776px"><span>00:08</span></div>
+            <div class="tick" style="left:866px"><span>00:09</span></div>
+            <div class="playhead"></div>
+          </div>
+          <div class="lane"><div class="clip" style="left:56px;width:220px;"><span>intro.mp4</span></div></div>
+          <div class="lane"><div class="clip" style="left:276px;width:170px;border-color:rgba(255,187,92,.4);background:linear-gradient(135deg,rgba(255,170,64,.38),rgba(255,90,120,.26));"><span>Captions</span></div></div>
+          <div class="lane empty"></div>
+          <div class="lane"><div class="clip" style="left:120px;width:420px;border-color:rgba(53,224,189,.4);background:linear-gradient(135deg,rgba(53,224,189,.34),rgba(42,109,255,.26));"><span>ambient.mp3</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <span class="badge" style="left:1112px;top:100px;">1</span>
+    <span class="badge" style="left:1108px;top:404px;">2</span>
+    <span class="badge" style="left:1004px;top:42px;">3</span>
+    <span class="badge" style="left:1225px;top:673px;">4</span>
+  </div>
+
+  <div class="caption">
+    <div class="name">
+      <b>Idea 2 — Right action center</b>
+      <span>Playback and edit buttons move into a dedicated right column.</span>
+    </div>
+    <div class="legend">
+      <div class="item"><span class="n">1</span><p><b>Inspector on top, actions below.</b> A stacked right column keeps properties and quick actions one glance apart.</p></div>
+      <div class="item"><span class="n">2</span><p><b>Play is the hero button,</b> with cut / ripple / marker / duplicate / fit / grid grouped underneath.</p></div>
+      <div class="item"><span class="n">3</span><p><b>Import moves</b> beside the media tabs and top bar, next to export.</p></div>
+      <div class="item"><span class="n">4</span><p><b>Timeline header</b> is reduced to track tools + zoom; transport stays floating on the canvas.</p></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .qa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 46px;
+    border: 1px solid rgba(128, 170, 255, 0.12);
+    border-radius: 9px;
+    color: #b7cbe6;
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.035);
+  }
+  .qa span { color: #8299b6; font-size: 8px; font-weight: 650; }
+</style>
+</body>
+</html>

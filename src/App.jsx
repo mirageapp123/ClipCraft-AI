@@ -2,9 +2,10 @@ import { applyProcessedSourceMedia, getSourceProcessingLane } from "./lib/source
 import { getAudioProcessingCopy } from "./i18nAudioProcessing.js";
 import { isTimedSegmentLaneLocked } from "./lib/timeline.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { X } from "@phosphor-icons/react";
+import { SlidersHorizontal, X } from "@phosphor-icons/react";
 
 import { LanguageIntro } from "./components/panels.jsx";
+import { HomeScreen, SaveProjectDialog } from "./components/HomeScreen.jsx";
 import { AuthScreen, SplashScreen } from "./components/EntranceFlow.jsx";
 import { PreviewStage } from "./components/PreviewStage.jsx";
 import { VoicePanel } from "./components/VoicePanel.jsx";
@@ -31,6 +32,13 @@ import { useEditorCatalog } from "./hooks/useEditorCatalog.js";
 import { useToast } from "./hooks/useToast.js";
 import { useProjectFiles } from "./hooks/useProjectFiles.js";
 import { useCompleteProject } from "./hooks/useCompleteProject.js";
+import {
+  createProjectThumbnail,
+  deleteSavedProject,
+  getSavedProjectArchive,
+  listSavedProjects,
+  saveProjectToLibrary,
+} from "./lib/projectLibrary.js";
 import { useAutosaveTimestamp } from "./hooks/useAutosaveTimestamp.js";
 import { useVisionAnalysis } from "./hooks/useVisionAnalysis.js";
 import { useSmartFrame } from "./hooks/useSmartFrame.js";
@@ -88,7 +96,7 @@ import { useMiganRepair } from "./hooks/useMiganRepair.js";
 import { useDetailRestoration } from "./hooks/useDetailRestoration.js";
 import { useSmartDenoise } from "./hooks/useSmartDenoise.js";
 import { useGenerationPlugins } from "./hooks/useGenerationPlugins.js";
-import { getVisualAssetPayload, getVisualSegmentTimeline, getImageThumbnailCount, getVisualSegmentsTotal, normalizeTimedSegmentIds } from "./lib/timeline.js";
+import { getVisualAssetPayload, getVisualSegmentTimeline, getImageThumbnailCount, getVisualSegmentsTotal, normalizeTimedSegmentIds, formatTime } from "./lib/timeline.js";
 import { getVisualSourceTime, normalizeVisualTransform, removeVisualPropertyKeyframe, updateVisualSegmentPlaybackRate, upsertVisualKeyframe, upsertVisualPropertyKeyframe } from "./lib/visualEffects.js";
 import { getVisualSpeedCurveTimelineProgress, updateVisualSegmentSpeedCurve } from "./lib/visualSpeedCurve.js";
 import { getLinkedSourceAudioEnd, getLinkedSourceAudioSegments, shouldMuteEmbeddedVideoAudio, sliceSourceAudioPeaks } from "./lib/sourceAudioSync.js";
@@ -143,6 +151,8 @@ export function App({ hostSession = null }) {
   const [canvasVisualTarget, setCanvasVisualTarget] = useState("");
   const [previewFrameReference, setPreviewFrameReference] = useState(null);
   const [showFirstVisualGuide, setShowFirstVisualGuide] = useState(false);
+  const [toolDrawerOpen, setToolDrawerOpen] = useState(false);
+  const [inspectorDrawerOpen, setInspectorDrawerOpen] = useState(false);
   const firstVisualGuideShownRef = useRef(false);
   const timelineImportRestoreRef = useRef(false);
   const changeMobilePanel = (nextPanel) => {
@@ -162,6 +172,30 @@ export function App({ hostSession = null }) {
     setMobilePanel(nextPanel);
   };
   const [introClosing, setIntroClosing] = useState(false);
+  const [savedProjects, setSavedProjects] = useState([]);
+  const [savedProjectsLoading, setSavedProjectsLoading] = useState(true);
+  const [savedProjectsError, setSavedProjectsError] = useState("");
+  const [currentProjectId, setCurrentProjectId] = useState("");
+  const [currentProjectName, setCurrentProjectName] = useState("");
+  const [saveProjectOpen, setSaveProjectOpen] = useState(false);
+  const [savingProject, setSavingProject] = useState(false);
+  const savingProjectRef = useRef(false);
+  const [openingProjectId, setOpeningProjectId] = useState("");
+  const refreshSavedProjects = useCallback(async () => {
+    setSavedProjectsLoading(true);
+    try {
+      const projects = await listSavedProjects();
+      setSavedProjects(projects);
+      setSavedProjectsError("");
+    } catch (error) {
+      setSavedProjectsError(error instanceof Error ? error.message : "Could not read saved projects from this browser.");
+    } finally {
+      setSavedProjectsLoading(false);
+    }
+  }, []);
+  useEffect(() => {
+    void refreshSavedProjects();
+  }, [refreshSavedProjects]);
   const {
     captionPlacement, captionPosition, captionSegments, captionSize, captionStyle,
     captionStylePresetId, captionStylePresets,
@@ -391,6 +425,14 @@ export function App({ hostSession = null }) {
   const previewFrameSize = usePreviewFrameSize(previewShellRef, ratio, compactRail);
   const selectedVisualSegment = visualSegments[selectedVisualSegmentIndex] ?? previewVisualSegment ?? null;
   const selectedVisualOverlay = visualOverlaySegments.find((item) => item.id === selectedVisualOverlayId) ?? null;
+  const visualSelectionKey = selectedVisualSegment?.id || selectedVisualOverlay?.id || "";
+  const lastVisualSelectionRef = useRef("");
+  useEffect(() => {
+    if (visualSelectionKey && visualSelectionKey !== lastVisualSelectionRef.current) {
+      setInspectorDrawerOpen(true);
+    }
+    lastVisualSelectionRef.current = visualSelectionKey;
+  }, [visualSelectionKey]);
   const selectedEffectSegment = selectedTrack === "overlay" && selectedVisualOverlay
     ? selectedVisualOverlay
     : selectedVisualSegment;
@@ -935,20 +977,19 @@ export function App({ hostSession = null }) {
     visionJobGenerationRef, visionObjectUrlsRef,
   });
 
-  // Splash → account gate → language rail. The language rail is a one-time choice:
-  // a stored session skips the account gate, and a browser that already picked a
-  // language goes straight into the editor.
+  // Splash → account gate → language rail → project home. The language rail is
+  // a one-time choice; afterwards every load lands on the project library.
   const handleSplashEnter = () => {
     if (!authSession) {
       setEntranceStage("auth");
       return;
     }
-    setEntranceStage(hasSeenLanguageIntro() ? "done" : "language");
+    setEntranceStage(hasSeenLanguageIntro() ? "home" : "language");
   };
 
   const handleAuthenticated = (session) => {
     setAuthSession(session);
-    setEntranceStage(hasSeenLanguageIntro() ? "done" : "language");
+    setEntranceStage(hasSeenLanguageIntro() ? "home" : "language");
   };
 
   const handleSignOut = () => {
@@ -962,7 +1003,7 @@ export function App({ hostSession = null }) {
   const handleEntranceChoose = (languageId) => {
     markLanguageIntroSeen();
     chooseInterfaceLanguage(languageId);
-    window.setTimeout(() => setEntranceStage("done"), 560);
+    window.setTimeout(() => setEntranceStage("home"), 560);
   };
 
   const {
@@ -1457,6 +1498,118 @@ export function App({ hostSession = null }) {
     isAnalysisBusy: () => isEditorBusy() || webMcp.isAiRunning() || (webMcp.execution.busy || webMcp.execution.hasPending) || generationPlugins.job.running,
     isEditorBusy: () => isEditorBusy() || webMcp.isAiRunning() || (webMcp.execution.busy || webMcp.execution.hasPending) || generationPlugins.job.running });
 
+  // ---- Browser project library (Saved Projects) ----
+  const savedProjectSummary = useMemo(() => {
+    const clips = visualSegments.length + visualOverlaySegments.length;
+    return `${clips} ${clips === 1 ? "clip" : "clips"} · ${formatTime(estimatedDuration)} · ${ratioId}`;
+  }, [estimatedDuration, ratioId, visualOverlaySegments.length, visualSegments.length]);
+
+  const handleOpenHome = () => {
+    setIsPlaying(false);
+    setShowFileMenu(false);
+    setShowExportMenu(false);
+    setShowSettings(false);
+    setEntranceStage("home");
+    void refreshSavedProjects();
+  };
+
+  const handleNewProjectFromHome = () => {
+    handleNewProject({ confirmed: true, complete: true });
+    setCurrentProjectId("");
+    setCurrentProjectName("");
+    setSaveProjectOpen(false);
+    setToolDrawerOpen(false);
+    setInspectorDrawerOpen(false);
+    setEntranceStage("done");
+  };
+
+  const handleToolbarNewProject = () => {
+    if (completeProject) {
+      void completeProject.newProject();
+      return;
+    }
+    if (!window.confirm("Creating a new project will clear the current timeline. Continue?")) return;
+    handleNewProject({ confirmed: true, complete: true });
+    setCurrentProjectId("");
+    setCurrentProjectName("");
+  };
+
+  const handleToolbarImportProject = (file) => {
+    if (file) {
+      setCurrentProjectId("");
+      setCurrentProjectName("");
+    }
+    return completeProject ? completeProject.importPortable(file) : handleImportProject(file);
+  };
+
+  const handleOpenSavedProject = async (project) => {
+    if (!project?.id || openingProjectId) return;
+    setOpeningProjectId(project.id);
+    try {
+      const archive = await getSavedProjectArchive(project.id);
+      if (!(archive instanceof Blob)) throw new Error("The saved project data is missing from this browser.");
+      const file = new File([archive], `${project.name || "project"}.timeline`, { type: archive.type || "application/zip" });
+      const opened = await handleImportProject(file);
+      if (!opened) throw new Error("The saved project could not be opened.");
+      setCurrentProjectId(project.id);
+      setCurrentProjectName(project.name);
+      setToolDrawerOpen(false);
+      setInspectorDrawerOpen(false);
+      setEntranceStage("done");
+    } catch (error) {
+      notify(error instanceof Error ? `Could not open “${project.name}”: ${error.message}` : `Could not open “${project.name}”.`);
+    } finally {
+      setOpeningProjectId("");
+    }
+  };
+
+  const handleDeleteSavedProject = async (project) => {
+    if (!project?.id) return;
+    if (!window.confirm(`Delete “${project.name}” from this browser? This cannot be undone.`)) return;
+    try {
+      await deleteSavedProject(project.id);
+      if (currentProjectId === project.id) {
+        setCurrentProjectId("");
+        setCurrentProjectName("");
+      }
+      await refreshSavedProjects();
+      notify(`Deleted “${project.name}” from Saved Projects.`);
+    } catch (error) {
+      notify(error instanceof Error ? `Could not delete the project: ${error.message}` : "Could not delete the project.");
+    }
+  };
+
+  const handleSaveProjectSubmit = async (name) => {
+    if (savingProjectRef.current) return;
+    savingProjectRef.current = true;
+    setSavingProject(true);
+    try {
+      const [archive, thumbnail] = await Promise.all([
+        createCurrentArchive(),
+        createProjectThumbnail(visualSegments[0] || visualOverlaySegments[0] || null),
+      ]);
+      const record = await saveProjectToLibrary({
+        id: currentProjectId,
+        name,
+        archive,
+        thumbnail,
+        duration: estimatedDuration,
+        ratioId,
+        clipCount: visualSegments.length + visualOverlaySegments.length,
+      });
+      setCurrentProjectId(record.id);
+      setCurrentProjectName(record.name);
+      await refreshSavedProjects();
+      setSaveProjectOpen(false);
+      notify(`Project saved — “${record.name}” is now in Saved Projects.`);
+    } catch (error) {
+      notify(error instanceof Error ? `Could not save the project: ${error.message}` : "Could not save the project.");
+    } finally {
+      savingProjectRef.current = false;
+      setSavingProject(false);
+    }
+  };
+
   const {
     activeTimelineClipDrag, audioClipPercent, displayedCaptionSegments,
     displayedCaptionTimeline, displayedVisualSegments, exportPercent, musicClipPercent, musicStartPercent,
@@ -1702,10 +1855,14 @@ export function App({ hostSession = null }) {
         toggleTrackVisibility={toggleTrackVisibility}
         showFileMenu={showFileMenu}
         setShowFileMenu={setShowFileMenu}
-        handleNewProject={completeProject ? () => { void completeProject.newProject(); } : handleNewProject}
+        handleNewProject={handleToolbarNewProject}
         handleExportProject={handleExportProject}
-        handleImportProject={completeProject ? completeProject.importPortable : handleImportProject}
+        handleImportProject={handleToolbarImportProject}
         projectFileInputRef={projectFileInputRef}
+        savedProjectName={currentProjectName}
+        onSaveProject={() => setSaveProjectOpen(true)}
+        savingProject={savingProject}
+        onOpenHome={handleOpenHome}
         authSession={authSession}
         onSignOut={handleSignOut}
       />
@@ -1719,7 +1876,7 @@ export function App({ hostSession = null }) {
           builtInAssets, captionPosition, captionSegments, captionSize, captionStyle,
           captionStylePresetId, captionStylePresets,
           captionTargetDuration, captionsEnabled, clearMusicTrack, clearSourceAudioTrack,
-          compactRail, currentSegmentIndex, deleteCaptionSegment,
+          compactRail, currentSegmentIndex, deleteCaptionSegment, toolDrawerOpen, setToolDrawerOpen,
           deleteUserAsset, downloadBlob, draggedAssetId,
           estimatedDuration, fileInputRef, generateCaptionsFromSourceAudio: generateCaptionsWhenIdle, handleAssetClick,
           handleAssetPointerDown, handleCaptionPositionChange, handleFiles, handleStickerClick, confirmStickerSelection,
@@ -1869,6 +2026,10 @@ export function App({ hostSession = null }) {
           currentTime={currentTime}
           seekTo={seekTo}
           notify={notify}
+          onUndo={undo}
+          onRedo={redo}
+          onCut={handleCutTrack}
+          onOpenMediaDrawer={() => { selectTool("media"); setToolDrawerOpen(true); }}
           getDraggedAsset={getDraggedAsset}
           applyAssetToTrack={applyAssetToTrack}
           addVisualOverlay={addVisualOverlay}
@@ -1893,6 +2054,17 @@ export function App({ hostSession = null }) {
           })}
         />
 
+        <button
+          className={`inspector-edge-tab ${inspectorDrawerOpen ? "is-open" : ""}`}
+          type="button"
+          aria-label={inspectorDrawerOpen ? t("close", "Close") : t("inspector", "Inspector")}
+          aria-expanded={inspectorDrawerOpen}
+          onClick={() => setInspectorDrawerOpen((open) => !open)}
+        >
+          {inspectorDrawerOpen ? <X size={13} weight="bold" /> : <SlidersHorizontal size={13} weight="bold" />}
+          <span>{inspectorDrawerOpen ? t("close", "Close") : t("inspector", "Inspector")}</span>
+        </button>
+        <div className={`inspector-drawer ${inspectorDrawerOpen ? "is-open" : ""}`}>
         <VoicePanel
           captionHighlightDisabled={trackLocks.caption}
           t={t}
@@ -2043,6 +2215,7 @@ export function App({ hostSession = null }) {
           onOpticalFlowAssetReady={handleOpticalFlowAssetReady}
           generationPlugins={generationPlugins}
         />
+        </div>
       </section>
 
       <Timeline
@@ -2279,6 +2452,33 @@ export function App({ hostSession = null }) {
       {entranceStage === "auth" ? <AuthScreen onAuthenticated={handleAuthenticated} /> : null}
       {shouldShowLanguageIntro ? (
         <LanguageIntro t={t} closing={introClosing} onChoose={handleEntranceChoose} language={activeLanguage} />
+      ) : null}
+      {entranceStage === "home" ? (
+        <HomeScreen
+          t={t}
+          language={activeLanguage}
+          projects={savedProjects}
+          loading={savedProjectsLoading}
+          error={savedProjectsError}
+          openingId={openingProjectId}
+          authSession={authSession}
+          onNewProject={handleNewProjectFromHome}
+          onOpenProject={handleOpenSavedProject}
+          onDeleteProject={handleDeleteSavedProject}
+          onRefresh={refreshSavedProjects}
+          onSignOut={handleSignOut}
+        />
+      ) : null}
+      {saveProjectOpen ? (
+        <SaveProjectDialog
+          t={t}
+          defaultName={currentProjectName || t("untitledProject", "Untitled project")}
+          busy={savingProject}
+          thumbnail={savedProjects.find((project) => project.id === currentProjectId)?.thumbnail || ""}
+          summary={savedProjectSummary}
+          onClose={() => { if (!savingProject) setSaveProjectOpen(false); }}
+          onSave={handleSaveProjectSubmit}
+        />
       ) : null}
       {toast ? <div className="toast">{toast}</div> : null}
     </main>

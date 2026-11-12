@@ -11,7 +11,15 @@ import { hostText } from "../i18nHost.js";
 import { captureProjectState, loadProjectMediaBlob, restoreProjectSnapshot } from "../lib/projectSnapshot.js";
 
 const waitForProjectPaint = () => new Promise((resolve) => {
-  requestAnimationFrame(() => requestAnimationFrame(resolve));
+  let settled = false;
+  const finish = () => {
+    if (settled) return;
+    settled = true;
+    resolve();
+  };
+  requestAnimationFrame(() => requestAnimationFrame(finish));
+  // Background tabs pause animation frames; never let project restore hang.
+  window.setTimeout(finish, 150);
 });
 
 export function useProjectFiles(deps) {
@@ -138,7 +146,7 @@ export function useProjectFiles(deps) {
   }, [deps]);
 
   const handleImportProject = useCallback(async (file) => {
-    if (importingRef.current) return;
+    if (importingRef.current) return false;
     if (!file) { deps.projectFileInputRef.current?.click(); return; }
     importingRef.current = true;
     const createdUrls = new Set();
@@ -327,9 +335,11 @@ export function useProjectFiles(deps) {
       // Dismiss loading in the same commit as the complete project, before
       // newly mounted clips start their background filmstrip refinement.
       deps.notify(archive.legacy ? "旧版工程已导入；请重新添加未嵌入的本地媒体，然后导出为 .timeline 工程包" : "工程包已导入，媒体素材已恢复");
+      return true;
     } catch (error) {
       console.error("Project import failed", error);
       deps.notify((PROJECT_IMPORT_COPY[deps.language] || PROJECT_IMPORT_COPY.en).error);
+      return false;
     } finally {
       if (importAudioContext) await importAudioContext.close().catch(() => {});
       if (!committed) createdUrls.forEach((url) => URL.revokeObjectURL(url));

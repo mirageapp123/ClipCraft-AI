@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown, X } from "@phosphor-icons/react";
 import { COMPACT_WORKSPACE_QUERY, TOOL_RAIL } from "../config/editor.js";
 import { MediaPanel, ToolPanel } from "./panels.jsx";
 import { PluginCatalogPanel } from "./GenerationPlugins.jsx";
@@ -52,7 +52,9 @@ export function EditorSidebar({ model: d }) {
               type="button"
               key={id}
               onClick={() => {
+                const closeCurrentDrawer = d.activeTool === id && d.toolDrawerOpen;
                 d.selectTool(id);
+                d.setToolDrawerOpen?.(closeCurrentDrawer ? false : true);
                 if (window.matchMedia?.(COMPACT_WORKSPACE_QUERY).matches) {
                   const defaultPanel = id === "caption" ? "inspector" : "tools";
                   d.setMobilePanel?.(d.mobilePanel === defaultPanel && d.activeTool === id ? "" : defaultPanel);
@@ -83,7 +85,15 @@ export function EditorSidebar({ model: d }) {
         ) : null}
       </div>
 
-      <aside className={`media-panel ${d.mobilePanel === "tools" && d.selectedLibraryAssetId ? "has-mobile-asset-actions" : ""} ${d.mobilePanel === "tools" && d.activeTool === "stickers" ? "has-mobile-sticker-actions" : ""}`}>
+      <aside className={`media-panel ${d.toolDrawerOpen ? "is-open" : ""} ${d.mobilePanel === "tools" && d.selectedLibraryAssetId ? "has-mobile-asset-actions" : ""} ${d.mobilePanel === "tools" && d.activeTool === "stickers" ? "has-mobile-sticker-actions" : ""}`}>
+        <button
+          className="tool-drawer-close"
+          type="button"
+          aria-label={d.t("close")}
+          onClick={() => d.setToolDrawerOpen?.(false)}
+        >
+          <X size={16} weight="bold" />
+        </button>
         {d.activeTool === "media" ? (
           <MediaPanel
             t={d.t}

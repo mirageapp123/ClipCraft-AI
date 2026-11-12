@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Idea 1 — Command bar</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="stage">
+  <div class="screen">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">▶</span>
+        <span class="wordmark">ClipCraft</span>
+        <span class="proj">Untitled project</span>
+        <span class="saved"><b></b>Saved just now</span>
+      </div>
+      <div class="spacer"></div>
+      <div class="cmd dead-center">
+        <div class="group">
+          <button class="btn">↺ Undo</button>
+          <button class="btn">↻ Redo</button>
+        </div>
+        <div class="group">
+          <button class="btn">✂ Cut <span class="k">C</span></button>
+          <button class="btn">16:9 ▾</button>
+        </div>
+        <div class="group">
+          <button class="btn ghost">▶ Preview</button>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="right" style="display:flex;align-items:center;gap:8px;">
+        <div class="meter"><i></i></div>
+        <button class="btn icon">⚙</button>
+        <button class="btn export">⤓ Export video ▾</button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <nav class="rail">
+        <div class="rail-item active"><span class="ico">▤</span>Media</div>
+        <div class="rail-item"><span class="ico">CC</span>Captions</div>
+        <div class="rail-item"><span class="ico">✦</span>Smart</div>
+        <div class="rail-item"><span class="ico">♫</span>Audio</div>
+        <div class="rail-item"><span class="ico">✧</span>Effects</div>
+        <div class="rail-item"><span class="ico">✚</span>Plugins</div>
+        <div class="rail-item"><span class="ico">☺</span>Stickers</div>
+      </nav>
+
+      <aside class="media panel">
+        <div class="media-head">
+          <span class="h">Media</span>
+          <span class="chip">＋ Import</span>
+        </div>
+        <div class="tabs">
+          <div class="on">Upload</div>
+          <div>Library</div>
+          <div>My assets</div>
+        </div>
+        <div class="upload">
+          <div class="up-ico">☁↑</div>
+          <strong>Click or drop media here</strong>
+          <span>JPG · PNG · WebP · MP4 · WebM · MOV · MP3 · WAV</span>
+        </div>
+        <div class="asset-grid">
+          <div class="asset"><em>clip-01.mp4</em></div>
+          <div class="asset"><em>frame.png</em></div>
+          <div class="asset"><em>logo.svg</em></div>
+          <div class="asset"><em>music.mp3</em></div>
+        </div>
+      </aside>
+
+      <section class="center">
+        <div class="preview-head">
+          <span class="label">Composition</span>
+          <span class="chip">1920 × 1080</span>
+          <span class="spacer"></span>
+          <span class="chip">Fit 100%</span>
+          <span class="chip">Grid</span>
+          <span class="chip">Fullscreen</span>
+        </div>
+        <div class="canvas-wrap">
+          <div class="grid-lines"></div>
+          <div class="empty-frame">
+            <span class="kicker">Start a project</span>
+            <div class="big">☁↑</div>
+            <strong>Upload image or video to start editing</strong>
+            <p>Timeline starts empty by default</p>
+          </div>
+          <div class="float-transport">
+            <div class="tbtn">⏮</div>
+            <div class="tbtn play">▶</div>
+            <div class="tbtn">⏭</div>
+            <span class="tclock">00:00:00 <em>/ 00:04.00</em></span>
+            <span class="tsep"></span>
+            <div class="tbtn">🔊</div>
+            <div class="tbtn">⛶</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="inspector panel">
+        <div class="insp-head">
+          <span class="h">Inspector</span>
+          <span class="chip">Visuals</span>
+        </div>
+        <div class="insp-tabs">
+          <div class="on">Basic</div>
+          <div>Mask</div>
+          <div>Color</div>
+          <div>Anim</div>
+        </div>
+        <div class="insp-empty">
+          <div class="ico">▣</div>
+          <strong>Select a clip</strong>
+          <span>Choose a clip on the timeline to see its controls here.</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-head">
+        <span class="tl-title">Timeline</span>
+        <button class="tl-btn on">◉ Marker</button>
+        <button class="tl-btn">✂ Cut</button>
+        <button class="tl-btn">⇄ Ripple</button>
+        <button class="tl-btn">🔗 Link</button>
+        <span class="spacer"></span>
+        <button class="tl-btn">↺</button>
+        <button class="tl-btn">↻</button>
+        <button class="tl-btn">⊟ Zoom 10s</button>
+        <button class="tl-btn">⛶ Fit</button>
+      </div>
+      <div class="tl-body">
+        <div class="track-labels">
+          <div class="tl-ruler" style="position:relative;">
+            <div class="tick" style="left:0"><span>00:00</span></div>
+            <div class="tick" style="left:90px"><span>00:01</span></div>
+            <div class="tick" style="left:180px"><span>00:02</span></div>
+          </div>
+          <div class="track-label on"><span class="grip">⋮⋮</span>👁 Visuals</div>
+          <div class="track-label"><span class="grip">⋮⋮</span>👁 Captions 1</div>
+          <div class="track-label"><span class="grip">⋮⋮</span>👁 Overlay</div>
+          <div class="track-label"><span class="grip">⋮⋮</span>👁 Music</div>
+        </div>
+        <div class="lanes">
+          <div class="tl-ruler">
+            <div class="tick" style="left:56px"><span>00:00</span></div>
+            <div class="tick" style="left:146px"><span>00:01</span></div>
+            <div class="tick" style="left:236px"><span>00:02</span></div>
+            <div class="tick" style="left:326px"><span>00:03</span></div>
+            <div class="tick" style="left:416px"><span>00:04</span></div>
+            <div class="tick" style="left:506px"><span>00:05</span></div>
+            <div class="tick" style="left:596px"><span>00:06</span></div>
+            <div class="tick" style="left:686px"><span>00:07</span></div>
+            <div class="tick" style="left:776px"><span>00:08</span></div>
+            <div class="tick" style="left:866px"><span>00:09</span></div>
+            <div class="playhead"></div>
+          </div>
+          <div class="lane"><div class="clip" style="left:56px;width:220px;"><span>intro.mp4</span></div></div>
+          <div class="lane"><div class="clip" style="left:276px;width:170px;border-color:rgba(255,187,92,.4);background:linear-gradient(135deg,rgba(255,170,64,.38),rgba(255,90,120,.26));"><span>Captions</span></div></div>
+          <div class="lane empty"></div>
+          <div class="lane"><div class="clip" style="left:120px;width:420px;border-color:rgba(53,224,189,.4);background:linear-gradient(135deg,rgba(53,224,189,.34),rgba(42,109,255,.26));"><span>ambient.mp3</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <span class="badge" style="left:492px;top:6px;">1</span>
+    <span class="badge" style="left:905px;top:62px;">2</span>
+    <span class="badge" style="left:1110px;top:104px;">3</span>
+    <span class="badge" style="left:570px;top:628px;">4</span>
+    <span class="badge" style="left:960px;top:672px;">5</span>
+  </div>
+
+  <div class="caption">
+    <div class="name">
+      <b>Idea 1 — Unified command bar</b>
+      <span>Global buttons move up; playback lives on the canvas.</span>
+    </div>
+    <div class="legend">
+      <div class="item"><span class="n">1</span><p><b>One command bar.</b> Undo, redo, cut, ratio and preview sit together at the top center.</p></div>
+      <div class="item"><span class="n">2</span><p><b>View controls</b> (fit, grid, fullscreen) move above the canvas instead of the timeline.</p></div>
+      <div class="item"><span class="n">3</span><p><b>Inspector tabs</b> stay on the right panel, with the panel title and clip badge.</p></div>
+      <div class="item"><span class="n">4</span><p><b>Floating transport</b> over the preview; the old bottom transport row disappears.</p></div>
+      <div class="item"><span class="n">5</span><p><b>Timeline header</b> keeps only edit tools + zoom/fit; play is on the canvas.</p></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

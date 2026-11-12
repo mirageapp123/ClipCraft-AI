@@ -10,6 +10,8 @@ import {
   FileArrowDown,
   FileArrowUp,
   FilePlus,
+  FloppyDisk,
+  FolderOpen,
   GearSix,
   GithubLogo,
   GoogleLogo,
@@ -78,6 +80,10 @@ export function Topbar({
   handleExportProject,
   handleImportProject,
   projectFileInputRef,
+  savedProjectName = "",
+  onSaveProject,
+  savingProject = false,
+  onOpenHome,
   authSession = null,
   onSignOut,
 }) {
@@ -142,7 +148,7 @@ export function Topbar({
         </IconButton>
         <div>
           <div className="project-title-row">
-            <div className="project-title">{completeProject?.name || t("projectTitle")}</div>
+            <div className="project-title">{completeProject?.name || savedProjectName || t("projectTitle")}</div>
             <div className="menu-anchor">
               <button className="project-file-button" type="button" onClick={() => setShowFileMenu((open) => !open)}>
                 {t("fileMenu")} <CaretDown size={13} />
@@ -157,6 +163,13 @@ export function Topbar({
                     <button className="file-menu-action file-menu-new" type="button" onClick={handleNewProject}>
                       <span className="file-menu-icon"><FilePlus size={17} /></span>
                       <span className="file-menu-copy"><strong>{t("newProject")}</strong><small>{t("newProjectHint")}</small></span>
+                    </button>
+                    <button className="file-menu-action" type="button" onClick={() => { setShowFileMenu(false); onOpenHome?.(); }}>
+                      <span className="file-menu-icon"><FolderOpen size={17} /></span>
+                      <span className="file-menu-copy">
+                        <strong>{t("savedProjects", "Saved Projects")}</strong>
+                        <small>{t("savedProjectsMenuHint", "Browse projects saved in this browser")}</small>
+                      </span>
                     </button>
                     <div className="file-menu-divider" />
                     {completeProject ? <button className="file-menu-action" type="button"
@@ -287,6 +300,17 @@ export function Topbar({
         <button className="preview-button" type="button" title={`${t("shortcutPlayPause")} · Space`} onClick={(event) => { handlePlayToggle(); releasePointerActivatedFocus(event); }}>
           {isPlaying ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
           <span>{t("preview")}</span>
+        </button>
+        <button
+          className="save-project-button"
+          type="button"
+          onClick={onSaveProject}
+          disabled={savingProject}
+          aria-label={savingProject ? t("savingProject", "Saving…") : t("saveProject", "Save Project")}
+          title={t("saveProjectHint", "Save the full timeline and media in this browser")}
+        >
+          {savingProject ? <CircleNotch className="is-spinning" size={16} weight="bold" /> : <FloppyDisk size={17} weight="bold" />}
+          <span>{savingProject ? t("savingProject", "Saving…") : t("saveProject", "Save Project")}</span>
         </button>
         <div className="menu-anchor" ref={exportAnchorRef}>
           <button

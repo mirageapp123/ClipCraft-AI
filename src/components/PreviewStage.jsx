@@ -3,16 +3,21 @@ import { useRelightCompare } from "../lib/videoRelighting.js";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
+  ArrowClockwise,
+  ArrowCounterClockwise,
   CaretDown,
   ArrowDown,
   ArrowUp,
   CloudArrowUp,
   FrameCorners,
+  Images,
   Pause,
   Play,
   Resize,
+  Scissors,
   SkipBack,
   SkipForward,
+  UploadSimple,
   X,
 } from "@phosphor-icons/react";
 
@@ -180,6 +185,10 @@ export function PreviewStage({
   currentTime,
   seekTo,
   notify,
+  onUndo,
+  onRedo,
+  onCut,
+  onOpenMediaDrawer,
   visualEffects,
   subjectEffect,
   subjectCutoutUrl = "",
@@ -688,6 +697,50 @@ export function PreviewStage({
           else void applyAssetToTrack?.(asset, "image");
         }}
       >
+        <div className="preview-quickbar">
+          <button className="preview-quick-chip" type="button" onClick={() => onOpenMediaDrawer?.()}>
+            <Images size={14} weight="bold" />
+            <span>{t("media", "Media")}</span>
+          </button>
+          <button className="preview-quick-chip is-primary" type="button" onClick={() => fileInputRef.current?.click()}>
+            <UploadSimple size={14} weight="bold" />
+            <span>{t("import", "Import")}</span>
+          </button>
+        </div>
+        <div className="preview-tool-island">
+          <IconButton label={t("undo")} tooltip onClick={() => onUndo?.()}>
+            <ArrowCounterClockwise size={16} />
+          </IconButton>
+          <IconButton label={t("redo")} tooltip onClick={() => onRedo?.()}>
+            <ArrowClockwise size={16} />
+          </IconButton>
+          <span className="island-divider" />
+          <IconButton label={t("cutSegment")} tooltip onClick={() => onCut?.()}>
+            <Scissors size={16} />
+          </IconButton>
+          <label className="island-ratio">
+            <select value={ratioId} onChange={(event) => setRatioId?.(event.target.value)} aria-label={t("canvasRatio", "Canvas ratio")}>
+              {RATIO_OPTIONS.map((option) => <option value={option.id} key={option.id}>{option.label}</option>)}
+            </select>
+            <CaretDown size={11} weight="bold" />
+          </label>
+          <span className="island-divider" />
+          <button
+            className="island-fit"
+            type="button"
+            title={fitMode === "contain" ? t("fit") : t("cover")}
+            onClick={() => setFitMode((mode) => (mode === "contain" ? "cover" : "contain"))}
+          >
+            {fitMode === "contain" ? t("fit") : t("cover")}
+          </button>
+          <IconButton
+            label={isFocusPreviewOpen ? t("closeFocusPreview") : t("fullscreenPreview")}
+            tooltip
+            onClick={() => setIsFocusPreviewOpen((open) => !open)}
+          >
+            <FrameCorners size={17} />
+          </IconButton>
+        </div>
         {!hasPreviewContent ? (
           <button className="preview-empty" type="button" onClick={() => fileInputRef.current?.click()}>
             <span className="preview-empty-kicker">Start a project</span>

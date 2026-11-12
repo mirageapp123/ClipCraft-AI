@@ -162,6 +162,7 @@ export function LanguageIntro({ t, closing, onChoose, language = "en" }) {
               <CaretRight size={16} weight="bold" />
             </button>
             <small>{preview("languageSaved")}</small>
+            <a className="lang-privacy-link" href="/privacy-policy">Privacy Policy</a>
           </footer>
         </section>
       </div>
@@ -310,6 +311,7 @@ export function MediaPanel({
             onDragLeave={() => setIsDragging(false)}
             onDrop={(event) => {
               event.preventDefault();
+              event.stopPropagation();
               setIsDragging(false);
               handleFiles(event.dataTransfer.files);
             }}

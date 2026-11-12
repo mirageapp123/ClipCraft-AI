@@ -690,9 +690,15 @@ export function PreviewStage({
       >
         {!hasPreviewContent ? (
           <button className="preview-empty" type="button" onClick={() => fileInputRef.current?.click()}>
+            <span className="preview-empty-kicker">Start a project</span>
             <CloudArrowUp size={38} />
             <strong>{t("previewEmptyTitle")}</strong>
-            <span>{t("previewEmptySubtitle")}</span>
+            <span className="preview-empty-subtitle">{t("previewEmptySubtitle")}</span>
+            <span className="preview-empty-steps" aria-hidden="true">
+              <span><b>1</b>Import media</span>
+              <span><b>2</b>Edit on the timeline</span>
+              <span><b>3</b>Export video</span>
+            </span>
           </button>
         ) : (
           <div

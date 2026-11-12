@@ -449,7 +449,7 @@ export function App({ hostSession = null }) {
     currentTime - (selectedVisualRange?.start ?? 0),
   ));
   const updateSelectedVisualEffects = (change) => {
-    if (!selectedVisualSegment?.id || trackLocks.image) return notify("请先选择未锁定的 Visuals 片段");
+    if (!selectedVisualSegment?.id || trackLocks.image) return notify("Select an unlocked clip on the Visuals track first.");
     setVisualSegments((items) => {
       const nextItems = items.map((item) => {
       if (item.id !== selectedVisualSegment.id) return item;
@@ -1008,7 +1008,7 @@ export function App({ hostSession = null }) {
   };
   const deleteSelectedStickerSegment = () => {
     if (!selectedStickerSegment?.id) return;
-    commitStickerSegments(stickerSegments.filter((segment) => segment.id !== selectedStickerSegment.id), "已删除贴纸片段");
+    commitStickerSegments(stickerSegments.filter((segment) => segment.id !== selectedStickerSegment.id), "Sticker clip deleted.");
   };
 
   const { generateAvatarAcceptanceFrame, openAvatarPanel } = useAvatarGeneration({
@@ -1334,7 +1334,7 @@ export function App({ hostSession = null }) {
     setSelectedVisualOverlayId(overlay.id);
     setSelectedVisualSegmentId("");
     setSelectedTrack("overlay");
-    notify("已添加为画中画，可在预览中拖动、缩放和旋转");
+    notify("Added as picture-in-picture — drag, scale and rotate it in the preview.");
   };
   const updateVisualOverlayById = (overlayId, transform) => {
     if (!overlayId || trackLocks.overlay) return;
@@ -1643,9 +1643,9 @@ export function App({ hostSession = null }) {
       if (audioFile && targetTrack === "music") {
         try {
           const decoded = await decodeWaveform(audioFile, 96);
-          replaceMusic(audioFile, decoded.duration, decoded.peaks, audioFile.name, "音乐已安全加入时间线");
+          replaceMusic(audioFile, decoded.duration, decoded.peaks, audioFile.name, "Music added safely to the timeline.");
         } catch (error) {
-          notify(error instanceof Error ? `无法读取该音频：${error.message}` : "无法读取该音频文件");
+          notify(error instanceof Error ? `Could not read this audio: ${error.message}` : "Could not read this audio file.");
         }
         return;
       }

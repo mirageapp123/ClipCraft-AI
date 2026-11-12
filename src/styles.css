@@ -15814,6 +15814,22 @@ canvas.relight-position { width:100%; height:auto; display:block; }
   text-align: center;
 }
 
+.lang-privacy-link {
+  display: block;
+  width: fit-content;
+  margin: 9px auto 0;
+  color: #6f89a8;
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(111, 137, 168, 0.3);
+}
+
+.lang-privacy-link:hover {
+  color: #b6d6f2;
+  border-bottom-color: rgba(182, 214, 242, 0.6);
+}
+
 @media (max-width: 1060px) {
   .lang-shell {
     grid-template-columns: minmax(0, 1fr);
@@ -15986,11 +16002,14 @@ canvas.relight-position { width:100%; height:auto; display:block; }
 
 .media-panel .tabs button {
   flex: 1 1 0;
+  min-width: 0;
   height: 30px;
+  padding: 0 4px;
   border-radius: 7px;
   color: #7d93af;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 650;
+  white-space: nowrap;
 }
 
 .media-panel .tabs button.is-active {
@@ -16004,26 +16023,50 @@ canvas.relight-position { width:100%; height:auto; display:block; }
 }
 
 .drop-zone {
-  border: 1px dashed rgba(96, 160, 255, 0.32);
-  border-radius: 12px;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 10px;
+  min-height: 168px;
+  margin-top: 12px;
+  padding: 24px 16px;
+  border: 1px solid rgba(96, 160, 255, 0.22);
+  border-radius: 14px;
+  text-align: center;
   background:
-    radial-gradient(130% 110% at 50% 0%, rgba(42, 109, 255, 0.13), rgba(42, 109, 255, 0) 70%),
-    rgba(9, 16, 29, 0.55);
+    radial-gradient(120% 95% at 50% 0%, rgba(42, 109, 255, 0.16), rgba(42, 109, 255, 0) 72%),
+    linear-gradient(180deg, rgba(13, 23, 41, 0.72), rgba(8, 14, 26, 0.6));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .drop-zone strong {
-  color: #dfeaff;
+  max-width: 190px;
+  color: #eaf3ff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .drop-zone span {
-  color: #7d93af;
+  max-width: 205px;
+  color: #8199b8;
+  font-size: 11px;
+  line-height: 1.55;
   overflow: visible;
   text-overflow: clip;
   white-space: normal;
 }
 
 .drop-zone svg {
-  color: #7cc4ff;
+  box-sizing: content-box;
+  grid-row: auto;
+  justify-self: center;
+  width: 26px;
+  height: 26px;
+  padding: 13px;
+  border: 1px solid rgba(96, 160, 255, 0.26);
+  border-radius: 14px;
+  color: #8ec6ff;
+  background: radial-gradient(120% 120% at 30% 0%, rgba(42, 109, 255, 0.26), rgba(124, 77, 255, 0.1));
 }
 
 .drop-zone:hover,
@@ -16149,6 +16192,56 @@ canvas.relight-position { width:100%; height:auto; display:block; }
 .preview-empty span {
   color: #8ba2bf;
   font-size: 12.5px;
+}
+
+.preview-empty .preview-empty-kicker {
+  padding: 4px 10px;
+  border: 1px solid rgba(96, 160, 255, 0.24);
+  border-radius: 999px;
+  color: #8fb6e6;
+  font-size: 9.5px;
+  font-weight: 760;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(42, 109, 255, 0.09);
+}
+
+.preview-empty .preview-empty-subtitle {
+  max-width: 360px;
+  line-height: 1.55;
+}
+
+.preview-empty .preview-empty-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.preview-empty .preview-empty-steps > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border: 1px solid rgba(128, 170, 255, 0.13);
+  border-radius: 999px;
+  color: #9db4d2;
+  font-size: 10.5px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.preview-empty .preview-empty-steps b {
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  color: #0a1220;
+  font-size: 9px;
+  font-weight: 800;
+  background: #7cc4ff;
 }
 
 .transport {

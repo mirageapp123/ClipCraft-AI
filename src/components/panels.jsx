@@ -1190,7 +1190,6 @@ export function ToolPanel(props) {
     removeSelectedSubjectEffect,
     openEffectsInspector,
     openFaceSwapInspector,
-    openOpticalFlowInspector,
     openCinematicDepthInspector,
     openPhotoParallaxInspector,
     openClickRippleInspector,
@@ -1719,12 +1718,10 @@ export function ToolPanel(props) {
         onAnalyze={analyzeEffectVisual || analyzeCurrentVisual}
         onOpenInspector={openEffectsInspector}
         onOpenFaceSwap={openFaceSwapInspector}
-        onOpenOpticalFlow={openOpticalFlowInspector}
         onOpenCinematicDepth={openCinematicDepthInspector}
         onOpenPhotoParallax={openPhotoParallaxInspector}
         onOpenClickRipple={openClickRippleInspector}
         faceSwapActive={effectsPanelMode === "face-swap"}
-        opticalFlowActive={effectsPanelMode === "vector-tracking"}
         relightActive={effectsPanelMode === "relight"}
         cinematicDepthActive={effectsPanelMode === "cinematic-depth"}
         cinematicDepthAnalysis={cinematicDepth?.record}

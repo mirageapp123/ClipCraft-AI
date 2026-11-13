@@ -252,11 +252,6 @@ export function EditorSidebar({ model: d }) {
               d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
-            openOpticalFlowInspector={() => {
-              d.setEffectsPanelMode?.("vector-tracking");
-              d.setInspectorDrawerOpen?.(true);
-              d.setMobilePanel?.("inspector");
-            }}
             openCinematicDepthInspector={(mode = "cinematic-depth") => {
               d.setEffectsPanelMode?.(mode);
               d.setInspectorDrawerOpen?.(true);

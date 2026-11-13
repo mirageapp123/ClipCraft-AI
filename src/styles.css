@@ -949,6 +949,11 @@ button:disabled {
 .plugin-secure-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; border: 1px solid rgba(71,231,216,.1); border-radius: 8px; padding: 9px 10px; color: #7f999a; font-size: 9.5px; line-height: 1.45; text-align: left; background: rgba(62,225,210,.04); }
 .plugin-secure-note svg { flex: 0 0 auto; color: #5ce3d6; }
 .plugin-prototype-note { margin-top: 12px !important; color: #65727b !important; font-size: 9px !important; line-height: 1.45 !important; }
+.plugin-help-links { display: grid; gap: 5px; width: 100%; margin-top: 12px; text-align: left; }
+.plugin-help-links > span { color: #5f6d76; font-size: 8.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.plugin-help-links > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.plugin-help-links a { display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,.08); border-radius: 6px; padding: 4px 7px; color: #8ba1a8; font-size: 9px; text-decoration: none; background: rgba(255,255,255,.025); }
+.plugin-help-links a:hover { border-color: rgba(66,235,219,.35); color: #b9f3ee; }
 .plugin-generator { display: grid; gap: 12px; padding-bottom: 6px; }
 .plugin-connected-banner { display: flex; align-items: center; justify-content: space-between; min-height: 38px; border: 1px solid rgba(68,223,138,.14); border-radius: 8px; padding: 0 9px; background: rgba(66,213,130,.055); }
 .plugin-connected-banner span { display: flex; align-items: center; gap: 7px; color: #8de8b5; font-size: 11px; }
@@ -17538,6 +17543,26 @@ canvas.relight-position { width:100%; height:auto; display:block; }
 .save-project-cancel:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.app-confirm-backdrop {
+  z-index: 420;
+}
+
+.app-confirm-dialog {
+  width: min(420px, 100%);
+}
+
+.app-confirm-icon.is-danger {
+  border-color: rgba(255, 118, 131, 0.28);
+  color: #ff97a2;
+  background: rgba(255, 74, 96, 0.12);
+}
+
+.save-project-confirm.is-danger {
+  border-color: rgba(255, 104, 120, 0.34);
+  background: linear-gradient(135deg, #e2485f, #c2283f);
+  box-shadow: 0 12px 26px rgba(194, 40, 63, 0.3);
 }
 
 @media (max-width: 1100px) {

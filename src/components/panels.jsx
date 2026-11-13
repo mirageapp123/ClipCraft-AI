@@ -1517,10 +1517,9 @@ export function ToolPanel(props) {
             <button className={smartMode === id ? "is-active" : ""} type="button" role="tab" aria-selected={smartMode === id} key={id} onClick={() => {
               setSmartMode(id);
               if (id === "avatar") openAvatarPanel();
-              // On compact viewports the tool cards live in the Tools drawer, so
-              // selecting one must also open the inspector where its controls
-              // render. Keep the two-pane desktop layout untouched.
-              if (window.matchMedia?.(COMPACT_WORKSPACE_QUERY).matches) openMobileInspector?.();
+              // Each smart tool renders its controls in the inspector, so reveal
+              // that panel on wide layouts too instead of only in compact mode.
+              openMobileInspector?.();
             }}>
               <Icon size={24} weight="duotone" /><strong>{title}</strong><span>{hint}</span>
             </button>

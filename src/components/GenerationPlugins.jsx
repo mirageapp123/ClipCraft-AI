@@ -20,7 +20,7 @@ import { INDIC_MODULE_COPY } from "../i18nIndicCopy.js";
 
 const COPY = {
   zh: { title: "插件", subtitle: "连接网页生成服务，结果进入 My assets。", search: "搜索插件", connected: "已连接", connect: "连接", available: "可用", cancel: "取消", disconnect: "断开连接", capability: "图像与视频生成", authTitle: "连接 Puter.js", authBody: "将打开 Puter 登录弹窗。登录成功后，生成调用会使用你的 Puter 账户额度。", continue: "登录 Puter", secure: "无需 API Key；登录和用量由 Puter 处理。", userPays: "用户账户计费", mode: "生成方式", textVideo: "文生视频", textImage: "文生图", prompt: "描述你想生成的内容", placeholder: "例如：雨后的东京街头，缓慢推进镜头，霓虹倒影在路面流动……", ratio: "画幅", duration: "时长", model: "模型", generate: "开始生成", generating: "正在远端生成", resultSaved: "已保存到 My assets", openAssets: "查看 My assets", puterNote: "视频生成可能需要几分钟，关闭面板不会取消远端任务。", spaceUrl: "Space 地址", spacePlaceholder: "owner/space-name 或 https://…hf.space", connectSpace: "连接 Space", spaceHelp: "支持公开或 Protected 的可嵌入 Space。", embedded: "嵌入式 Space", importUrl: "生成结果地址", importPlaceholder: "粘贴 Space 返回的视频或图片 URL", importAsset: "导入 My assets", hfNote: "不同 Space 的 API 结构不同；当前通过嵌入界面生成，再用结果地址导入。", connectionError: "连接失败", jobError: "任务失败" },
-  en: { title: "Plugins", subtitle: "Connect browser generation services and save results to My assets.", search: "Search plugins", connected: "Connected", connect: "Connect", available: "Available", cancel: "Cancel", disconnect: "Disconnect", capability: "Image and video generation", authTitle: "Connect Puter.js", authBody: "A Puter sign-in popup will open. Generation uses the signed-in user's Puter allowance.", continue: "Sign in to Puter", secure: "No API key; Puter handles sign-in and usage.", userPays: "User-paid usage", mode: "Generation mode", textVideo: "Text to video", textImage: "Text to image", prompt: "Describe what to generate", placeholder: "A rain-soaked Tokyo street, slow dolly in, neon reflections moving across the pavement…", ratio: "Aspect ratio", duration: "Duration", model: "Model", generate: "Generate", generating: "Generating remotely", resultSaved: "Saved to My assets", openAssets: "View My assets", puterNote: "Video generation can take several minutes. Closing the panel does not cancel the remote task.", spaceUrl: "Space address", spacePlaceholder: "owner/space-name or https://…hf.space", connectSpace: "Connect Space", spaceHelp: "Supports embeddable public or Protected Spaces.", embedded: "Embedded Space", importUrl: "Result URL", importPlaceholder: "Paste an image or video URL returned by the Space", importAsset: "Import to My assets", hfNote: "Space APIs differ. Generate in the embedded app, then import its result URL.", connectionError: "Connection failed", jobError: "Task failed" },
+  en: { title: "Plugins", subtitle: "Connect browser generation services and save results to My assets.", search: "Search plugins", connected: "Connected", connect: "Connect", available: "Available", cancel: "Cancel", disconnect: "Disconnect", capability: "Image and video generation", authTitle: "Connect Puter.js", authBody: "A Puter sign-in popup will open. Generation uses the signed-in user's Puter allowance.", continue: "Sign in to Puter", secure: "No API key; Puter handles sign-in and usage.", docsTitle: "Docs & downloads", userPays: "User-paid usage", mode: "Generation mode", textVideo: "Text to video", textImage: "Text to image", prompt: "Describe what to generate", placeholder: "A rain-soaked Tokyo street, slow dolly in, neon reflections moving across the pavement…", ratio: "Aspect ratio", duration: "Duration", model: "Model", generate: "Generate", generating: "Generating remotely", resultSaved: "Saved to My assets", openAssets: "View My assets", puterNote: "Video generation can take several minutes. Closing the panel does not cancel the remote task.", spaceUrl: "Space address", spacePlaceholder: "owner/space-name or https://…hf.space", connectSpace: "Connect Space", spaceHelp: "Supports embeddable public or Protected Spaces.", embedded: "Embedded Space", importUrl: "Result URL", importPlaceholder: "Paste an image or video URL returned by the Space", importAsset: "Import to My assets", hfNote: "Space APIs differ. Generate in the embedded app, then import its result URL.", connectionError: "Connection failed", jobError: "Task failed" },
   ja: { title: "プラグイン", subtitle: "Web生成サービスを接続し、結果を My assets に保存します。", search: "プラグインを検索", connected: "接続済み", connect: "接続", available: "利用可能", cancel: "キャンセル", disconnect: "接続解除", capability: "画像・動画生成", authTitle: "Puter.js に接続", authBody: "Puter のログイン画面を開き、ユーザー自身の利用枠で生成します。", continue: "Puter にログイン", secure: "APIキー不要。認証と利用量は Puter が管理します。", userPays: "ユーザー課金", mode: "生成方法", textVideo: "テキストから動画", textImage: "テキストから画像", prompt: "生成内容を説明", placeholder: "雨上がりの東京、ゆっくり前進するカメラ、路面に揺れるネオン…", ratio: "比率", duration: "長さ", model: "モデル", generate: "生成", generating: "リモート生成中", resultSaved: "My assets に保存しました", openAssets: "My assets を開く", puterNote: "動画生成には数分かかる場合があります。", spaceUrl: "Space アドレス", spacePlaceholder: "owner/space-name または https://…hf.space", connectSpace: "Space を接続", spaceHelp: "埋め込み可能な公開または Protected Space に対応します。", embedded: "埋め込み Space", importUrl: "結果 URL", importPlaceholder: "Space が返した画像または動画 URL", importAsset: "My assets に読み込む", hfNote: "Space ごとにAPIが異なるため、埋め込み画面で生成後に結果URLを読み込みます。", connectionError: "接続に失敗しました", jobError: "タスクに失敗しました" },
   ko: { title: "플러그인", subtitle: "웹 생성 서비스를 연결하고 결과를 My assets에 저장합니다.", search: "플러그인 검색", connected: "연결됨", connect: "연결", available: "사용 가능", cancel: "취소", disconnect: "연결 해제", capability: "이미지 및 비디오 생성", authTitle: "Puter.js 연결", authBody: "Puter 로그인 팝업이 열리며 사용자의 Puter 할당량으로 생성합니다.", continue: "Puter 로그인", secure: "API 키 없이 Puter가 로그인과 사용량을 관리합니다.", userPays: "사용자 결제", mode: "생성 방식", textVideo: "텍스트로 비디오", textImage: "텍스트로 이미지", prompt: "생성할 내용 설명", placeholder: "비 내린 도쿄 거리, 천천히 전진하는 카메라, 네온 반사…", ratio: "화면 비율", duration: "길이", model: "모델", generate: "생성", generating: "원격 생성 중", resultSaved: "My assets에 저장됨", openAssets: "My assets 보기", puterNote: "비디오 생성에는 몇 분이 걸릴 수 있습니다.", spaceUrl: "Space 주소", spacePlaceholder: "owner/space-name 또는 https://…hf.space", connectSpace: "Space 연결", spaceHelp: "임베드 가능한 Public 또는 Protected Space를 지원합니다.", embedded: "임베드 Space", importUrl: "결과 URL", importPlaceholder: "Space가 반환한 이미지 또는 비디오 URL", importAsset: "My assets로 가져오기", hfNote: "Space마다 API가 달라 임베드 화면에서 생성한 뒤 결과 URL을 가져옵니다.", connectionError: "연결 실패", jobError: "작업 실패" },
   es: { title: "Plugins", subtitle: "Conecta servicios web y guarda resultados en My assets.", search: "Buscar plugins", connected: "Conectado", connect: "Conectar", available: "Disponible", cancel: "Cancelar", disconnect: "Desconectar", capability: "Generación de imagen y vídeo", authTitle: "Conectar Puter.js", authBody: "Se abrirá el acceso a Puter y la generación usará el saldo del usuario.", continue: "Entrar en Puter", secure: "Sin clave API; Puter gestiona acceso y uso.", userPays: "Paga el usuario", mode: "Modo", textVideo: "Texto a vídeo", textImage: "Texto a imagen", prompt: "Describe el contenido", placeholder: "Una calle de Tokio bajo la lluvia, avance lento, reflejos de neón…", ratio: "Formato", duration: "Duración", model: "Modelo", generate: "Generar", generating: "Generando", resultSaved: "Guardado en My assets", openAssets: "Ver My assets", puterNote: "El vídeo puede tardar varios minutos.", spaceUrl: "Dirección del Space", spacePlaceholder: "owner/space-name o https://…hf.space", connectSpace: "Conectar Space", spaceHelp: "Admite Spaces públicos o Protected incrustables.", embedded: "Space incrustado", importUrl: "URL del resultado", importPlaceholder: "URL de imagen o vídeo devuelta por el Space", importAsset: "Importar a My assets", hfNote: "Cada Space tiene una API distinta; genera en la vista incrustada e importa la URL.", connectionError: "Error de conexión", jobError: "Error de tarea" },
@@ -78,6 +78,37 @@ Object.assign(LOCAL_COPY, {
 function getCopy(language) {
   const key = String(language || "en").toLowerCase();
   return { ...(COPY[key] || COPY.en), ...(AUTH_RECOVERY_COPY[key] || AUTH_RECOVERY_COPY.en), ...(LOCAL_COPY[key] || LOCAL_COPY.en), ...(INDIC_MODULE_COPY[key]?.generationPlugins || {}) };
+}
+
+const PLUGIN_HELP_LINKS = {
+  puter: [
+    { label: "Puter.js docs", href: "https://docs.puter.com/" },
+    { label: "Create a Puter account", href: "https://puter.com/" },
+  ],
+  comfyui: [
+    { label: "Download ComfyUI", href: "https://www.comfy.org/download" },
+    { label: "ComfyUI docs", href: "https://docs.comfy.org/" },
+    { label: "ComfyUI source", href: "https://github.com/Comfy-Org/ComfyUI" },
+  ],
+  webui: [
+    { label: "WebUI source", href: "https://github.com/AUTOMATIC1111/stable-diffusion-webui" },
+    { label: "Enable --api", href: "https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Command-Line-Arguments-and-Settings" },
+  ],
+};
+
+function PluginHelpLinks({ copy, providerId }) {
+  const links = PLUGIN_HELP_LINKS[providerId] || [];
+  if (!links.length) return null;
+  return (
+    <div className="plugin-help-links">
+      <span>{copy.docsTitle || "Docs & downloads"}</span>
+      <div>
+        {links.map(({ label, href }) => (
+          <a key={href} href={href} target="_blank" rel="noreferrer">{label}<ArrowSquareOut size={12} /></a>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function getPuterAuthError(copy, connection) {
@@ -179,6 +210,7 @@ function PuterInspector({ copy, plugins }) {
           <div className="plugin-capability-grid"><span><ImageSquare size={17} /> T2I</span><span><VideoCamera size={17} /> T2V</span><span><UserCircle size={17} /> {copy.userPays}</span></div>
           <button type="button" className="plugin-button primary wide" onClick={() => setShowAuth(true)}><LinkSimple size={17} /> {copy.connect}</button>
           <div className="plugin-secure-note"><ShieldCheck size={17} weight="duotone" /><span>{copy.secure}</span></div>
+          <PluginHelpLinks copy={copy} providerId="puter" />
           {authError ? <p className="plugin-error">{authError}</p> : null}
         </div>
         {showAuth ? <AuthDialog copy={copy} busy={busy} error={authError} onCancel={() => { plugins.cancelPuterConnect(); setShowAuth(false); }} onContinue={async () => { try { await plugins.connectPuter(); setShowAuth(false); } catch { /* shown in dialog */ } }} /> : null}
@@ -196,6 +228,7 @@ function PuterInspector({ copy, plugins }) {
       <JobStatus copy={copy} plugins={plugins} providerId="puter" />
       <button type="button" className="plugin-button primary wide generation" disabled={!prompt.trim() || running} onClick={() => plugins.generateWithPuter({ mode, prompt, ratio, duration: Number(duration), model })}>{running ? <SpinnerGap className="spin" size={18} /> : <MagicWand size={18} weight="fill" />}{running ? copy.generating : copy.generate}</button>
       <p className="plugin-prototype-note">{copy.puterNote}</p>
+      <PluginHelpLinks copy={copy} providerId="puter" />
     </div>
   );
 }
@@ -210,7 +243,7 @@ function useStoredValue(key, fallback) {
   return [value, setValue];
 }
 
-function LocalConnectionView({ copy, name, tone, Icon, connection, endpoint, setEndpoint, defaultEndpoint, onConnect, description, capabilities }) {
+function LocalConnectionView({ copy, providerId, name, tone, Icon, connection, endpoint, setEndpoint, defaultEndpoint, onConnect, description, capabilities }) {
   const busy = connection.state === "connecting";
   return (
     <div className="plugin-connect-view">
@@ -220,6 +253,7 @@ function LocalConnectionView({ copy, name, tone, Icon, connection, endpoint, set
       <label className="plugin-field plugin-local-endpoint"><span>{copy.endpoint}</span><input value={endpoint} onChange={(event) => setEndpoint(event.target.value)} placeholder={defaultEndpoint} spellCheck={false} /></label>
       <button type="button" className="plugin-button primary wide" disabled={busy} onClick={() => onConnect(endpoint).catch(() => {})}>{busy ? <SpinnerGap className="spin" size={17} /> : <LinkSimple size={17} />}{busy ? copy.connecting : copy.connectLocal}</button>
       <div className="plugin-secure-note"><ShieldCheck size={17} weight="duotone" /><span>{copy.localOnly}</span></div>
+      <PluginHelpLinks copy={copy} providerId={providerId} />
       {connection.error ? <p className="plugin-error">{copy.connectionError}: {connection.error}</p> : null}
     </div>
   );
@@ -250,7 +284,7 @@ function ComfyUIInspector({ copy, plugins }) {
   const [seed, setSeed] = useState("-1");
   const connection = plugins.connections.comfyui;
   if (connection.state !== "connected") {
-    return <LocalConnectionView copy={copy} name="ComfyUI" tone="mint" Icon={PlugsConnected} connection={connection} endpoint={endpoint} setEndpoint={setEndpoint} defaultEndpoint="http://127.0.0.1:8188" onConnect={plugins.connectComfyUI} description={copy.comfyDescription} capabilities={[{ icon: PlugsConnected, label: copy.cardWorkflow }, { icon: ImageSquare, label: "T2I" }, { icon: VideoCamera, label: "T2V" }]} />;
+    return <LocalConnectionView copy={copy} providerId="comfyui" name="ComfyUI" tone="mint" Icon={PlugsConnected} connection={connection} endpoint={endpoint} setEndpoint={setEndpoint} defaultEndpoint="http://127.0.0.1:8188" onConnect={plugins.connectComfyUI} description={copy.comfyDescription} capabilities={[{ icon: PlugsConnected, label: copy.cardWorkflow }, { icon: ImageSquare, label: "T2I" }, { icon: VideoCamera, label: "T2V" }]} />;
   }
   return (
     <div className="plugin-generator">
@@ -261,6 +295,7 @@ function ComfyUIInspector({ copy, plugins }) {
       <label className="plugin-field plugin-workflow-field"><span>{copy.comfyWorkflow}</span><textarea value={workflowTemplate} onChange={(event) => setWorkflowTemplate(event.target.value)} placeholder={copy.workflowPlaceholder} spellCheck={false} /><p>{copy.comfyWorkflowHelp}</p></label>
       <LocalJobActions copy={copy} plugins={plugins} providerId="comfyui" disabled={!workflowTemplate.trim()} onGenerate={() => plugins.generateWithComfyUI({ workflowTemplate, prompt, negativePrompt, seed })} />
       <p className="plugin-prototype-note">{copy.comfyNote}</p>
+      <PluginHelpLinks copy={copy} providerId="comfyui" />
     </div>
   );
 }
@@ -284,7 +319,7 @@ function WebUIInspector({ copy, plugins }) {
     reader.readAsDataURL(file);
   };
   if (connection.state !== "connected") {
-    return <LocalConnectionView copy={copy} name="Stable Diffusion WebUI" tone="blue" Icon={ImageSquare} connection={connection} endpoint={endpoint} setEndpoint={setEndpoint} defaultEndpoint="http://127.0.0.1:7860" onConnect={plugins.connectWebUI} description={copy.webuiDescription} capabilities={[{ icon: ImageSquare, label: "T2I" }, { icon: ImageSquare, label: "I2I" }, { icon: PlugsConnected, label: copy.cardLocal }]} />;
+    return <LocalConnectionView copy={copy} providerId="webui" name="Stable Diffusion WebUI" tone="blue" Icon={ImageSquare} connection={connection} endpoint={endpoint} setEndpoint={setEndpoint} defaultEndpoint="http://127.0.0.1:7860" onConnect={plugins.connectWebUI} description={copy.webuiDescription} capabilities={[{ icon: ImageSquare, label: "T2I" }, { icon: ImageSquare, label: "I2I" }, { icon: PlugsConnected, label: copy.cardLocal }]} />;
   }
   return (
     <div className="plugin-generator">
@@ -297,6 +332,7 @@ function WebUIInspector({ copy, plugins }) {
       <div className="plugin-field-row"><label className="plugin-field"><span>{copy.steps}</span><input type="number" min="1" max="150" value={steps} onChange={(event) => setSteps(event.target.value)} /></label><label className="plugin-field"><span>{copy.seed}</span><input type="number" value={seed} onChange={(event) => setSeed(event.target.value)} /></label></div>
       <LocalJobActions copy={copy} plugins={plugins} providerId="webui" disabled={!prompt.trim() || (mode === "img2img" && !initImage)} onGenerate={() => plugins.generateWithWebUI({ mode, prompt, negativePrompt, width, height, steps, seed, initImage })} />
       <p className="plugin-prototype-note">{copy.webuiNote}</p>
+      <PluginHelpLinks copy={copy} providerId="webui" />
     </div>
   );
 }

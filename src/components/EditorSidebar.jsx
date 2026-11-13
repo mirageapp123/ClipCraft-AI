@@ -128,6 +128,7 @@ export function EditorSidebar({ model: d }) {
             onOpenAiMusic={() => {
               d.setSmartMode("ai-music");
               d.selectTool("smart");
+              d.setInspectorDrawerOpen?.(true);
               if (window.matchMedia?.(COMPACT_WORKSPACE_QUERY).matches) d.setMobilePanel?.("inspector");
             }}
           />
@@ -140,6 +141,9 @@ export function EditorSidebar({ model: d }) {
               // plugin context inside the shared inspector panel.
               d.setMobilePanelOrigin?.("");
               d.setMobileInspectorSection?.("");
+              // On wide layouts the inspector is an off-canvas drawer, so a card
+              // click must open it explicitly or the click appears to do nothing.
+              d.setInspectorDrawerOpen?.(true);
               if (window.matchMedia?.(COMPACT_WORKSPACE_QUERY).matches) d.setMobilePanel?.("inspector");
             }}
           />
@@ -214,6 +218,7 @@ export function EditorSidebar({ model: d }) {
             openMobileInspector={() => {
               d.setMobilePanelOrigin?.("");
               d.setMobileInspectorSection?.("");
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             musicBlob={d.musicBlob}
@@ -239,26 +244,32 @@ export function EditorSidebar({ model: d }) {
             effectsPanelMode={d.effectsPanelMode}
             openEffectsInspector={() => {
               d.setEffectsPanelMode?.("outline");
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             openFaceSwapInspector={() => {
               d.setEffectsPanelMode?.("face-swap");
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             openOpticalFlowInspector={() => {
               d.setEffectsPanelMode?.("vector-tracking");
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             openCinematicDepthInspector={(mode = "cinematic-depth") => {
               d.setEffectsPanelMode?.(mode);
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             openPhotoParallaxInspector={() => {
               d.setEffectsPanelMode?.("photo-parallax");
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             openClickRippleInspector={() => {
               d.setEffectsPanelMode?.("click-ripple");
+              d.setInspectorDrawerOpen?.(true);
               d.setMobilePanel?.("inspector");
             }}
             cinematicDepth={d.cinematicDepth}

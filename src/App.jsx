@@ -90,6 +90,7 @@ import { createEditorCommandActions } from "./lib/editorCommandActions.js";
 import { useTimelineViewModel } from "./lib/timelineViewModel.js";
 import { createTranslator, getStoredLanguage, hasSeenLanguageIntro, markLanguageIntroSeen, translateOptionName } from "./i18n.js";
 import { getAuthSession, signOut } from "./lib/accountAuth.js";
+import { confirmAction } from "./lib/confirmDialog.js";
 import { decodeWaveform, downloadBlob } from "./lib/media.js";
 import { useAiMusicGeneration } from "./hooks/useAiMusicGeneration.js";
 import { useMiganRepair } from "./hooks/useMiganRepair.js";
@@ -1523,12 +1524,17 @@ export function App({ hostSession = null }) {
     setEntranceStage("done");
   };
 
-  const handleToolbarNewProject = () => {
+  const handleToolbarNewProject = async () => {
     if (completeProject) {
       void completeProject.newProject();
       return;
     }
-    if (!window.confirm("Creating a new project will clear the current timeline. Continue?")) return;
+    const confirmed = await confirmAction({
+      title: "Start a new project?",
+      message: "Creating a new project will clear the current timeline. This cannot be undone.",
+      confirmLabel: "New project",
+    });
+    if (!confirmed) return;
     handleNewProject({ confirmed: true, complete: true });
     setCurrentProjectId("");
     setCurrentProjectName("");
@@ -1565,7 +1571,14 @@ export function App({ hostSession = null }) {
 
   const handleDeleteSavedProject = async (project) => {
     if (!project?.id) return;
-    if (!window.confirm(`Delete “${project.name}” from this browser? This cannot be undone.`)) return;
+    const confirmed = await confirmAction({
+      title: `Delete “${project.name}”?`,
+      message: "This removes the project from Saved Projects in this browser. This cannot be undone.",
+      confirmLabel: "Delete project",
+      cancelLabel: "Keep project",
+      tone: "danger",
+    });
+    if (!confirmed) return;
     try {
       await deleteSavedProject(project.id);
       if (currentProjectId === project.id) {
@@ -1890,6 +1903,7 @@ export function App({ hostSession = null }) {
             setVoiceTab("synthesis");
             setMobilePanelOrigin("");
             setMobileInspectorSection("");
+            setInspectorDrawerOpen(true);
             if (window.matchMedia?.(COMPACT_WORKSPACE_QUERY).matches) changeMobilePanel("inspector");
           },
           previewVisionOptions, previewVisualSrc, previewVisualType, progress, script,
@@ -1907,7 +1921,7 @@ export function App({ hostSession = null }) {
           effectsPanelMode, setEffectsPanelMode, cinematicDepth, photoParallaxDepth,
           visualLocalTime, updateSelectedVisualEffects, updateSelectedSubjectEffect, updateSelectedClickRipple, removeSelectedSubjectEffect, miganRepair, hdRestoration, smartDenoise,
           mobilePanel, setMobilePanel: changeMobilePanel, applyAssetToTrack, handleGeneratedVector, generationPlugins,
-          setMobilePanelOrigin, setMobileInspectorSection,
+          setMobilePanelOrigin, setMobileInspectorSection, inspectorDrawerOpen, setInspectorDrawerOpen,
         }} />
 
         <PreviewStage
@@ -2246,6 +2260,7 @@ export function App({ hostSession = null }) {
         openMobileInspector={(track, section = "") => {
           setMobilePanelOrigin(getMobileClipPanelOrigin(track));
           setMobileInspectorSection(section);
+          setInspectorDrawerOpen(true);
           changeMobilePanel("inspector");
         }}
         openMobileTools={() => changeMobilePanel("tools")}

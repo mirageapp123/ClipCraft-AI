@@ -47,7 +47,7 @@ export function PrivacyPolicyPage() {
 
       <header className="privacy-nav">
         <a className="privacy-brand" href="/">
-          <img src="/icons/timeline-studio-icon.svg" alt="" width="38" height="38" />
+          <img src="/icons/clipcraft-reel.jpg" alt="" width="38" height="38" />
           <span className="privacy-wordmark">
             ClipCraft <em>AI</em>
           </span>

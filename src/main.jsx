@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App.jsx";
 import { PrivacyPolicyPage } from "./components/PrivacyPolicyPage.jsx";
+import { TermsOfServicePage } from "./components/TermsOfServicePage.jsx";
 import { registerModelCacheServiceWorker } from "./lib/serviceWorker.js";
 import { connectHostSession } from "./lib/hostSession.js";
 import { getStoredLanguage } from "./i18n.js";
@@ -16,6 +17,13 @@ if (currentPath === "/privacy-policy") {
   createRoot(rootElement).render(
     <React.StrictMode>
       <PrivacyPolicyPage />
+    </React.StrictMode>,
+  );
+} else if (currentPath === "/terms-of-service") {
+  document.title = "Terms of Service — ClipCraft";
+  createRoot(rootElement).render(
+    <React.StrictMode>
+      <TermsOfServicePage />
     </React.StrictMode>,
   );
 } else {

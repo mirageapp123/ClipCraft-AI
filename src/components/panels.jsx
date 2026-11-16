@@ -107,7 +107,7 @@ export function LanguageIntro({ t, closing, onChoose, language = "en" }) {
               decoding="async"
             />
             <div className="lang-brand-copy">
-              <h1 id="entrance-title">ClipCraft</h1>
+              <h1 id="entrance-title">ClipCraft AI</h1>
               <p>{preview("entranceTagline")}</p>
             </div>
           </div>
@@ -163,6 +163,7 @@ export function LanguageIntro({ t, closing, onChoose, language = "en" }) {
             </button>
             <small>{preview("languageSaved")}</small>
             <a className="lang-privacy-link" href="/privacy-policy">Privacy Policy</a>
+            <a className="lang-privacy-link" href="/terms-of-service">Terms and Conditions</a>
           </footer>
         </section>
       </div>

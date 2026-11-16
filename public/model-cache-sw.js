@@ -1,12 +1,11 @@
 const MODEL_CACHE_NAME = "timeline-studio-model-cache-v5";
-const APP_CACHE_NAME = "timeline-studio-app-shell-v3";
+const APP_CACHE_NAME = "timeline-studio-app-shell-v4";
 const APP_SHELL_URLS = [
   "/",
   "/manifest.webmanifest",
-  "/icons/timeline-studio-icon.svg",
-  "/icons/timeline-studio-icon-192.png",
-  "/icons/timeline-studio-icon-512.png",
-  "/icons/timeline-studio-apple-touch.png",
+  "/icons/clipcraft-reel-192.png",
+  "/icons/clipcraft-reel-512.png",
+  "/icons/clipcraft-reel-apple-touch.png",
 ];
 const CACHEABLE_EXTENSIONS = [
   ".bin",

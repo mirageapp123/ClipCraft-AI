@@ -1,5 +1,7 @@
 # 不用安装剪辑软件，AI 配音、字幕和视频导出都在浏览器完成：开源 Timeline Studio
 
+> **Historical note:** This article was written about the upstream Timeline Studio project. ClipCraft AI is the current application built on that MIT-licensed codebase. See [README.md](../README.md) for current documentation and links.
+
 做短视频时，你是否也遇到过这些问题？
 
 - 为了完成一次简单剪辑，要先安装体积庞大的桌面软件；

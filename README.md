@@ -1,207 +1,138 @@
-# Timeline Studio — Browser AI Video Editor
+# ClipCraft AI — Browser AI Video Editor
 
-**English** | [中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [Español](README.es.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Português](README.pt-BR.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Русский](README.ru.md)
+[![Live App](https://img.shields.io/badge/Live_App-ClipCraft_AI-35ead9?style=flat-square)](https://clip-craft-ai-weld.vercel.app)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Timeline_Studio-35ead9?style=flat-square)](https://video-editor.ai-creator.top/)
-[![MIT License](https://img.shields.io/github/license/MartinDelophy/ai-video-editor?style=flat-square)](LICENSE)
-[![skills.sh](https://skills.sh/b/MartinDelophy/ai-video-editor)](https://skills.sh/MartinDelophy/ai-video-editor)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md) [![LINUX DO](https://shorturl.at/ggSqS)](https://linux.do)
-<a href="https://toolindex.net/tools/timeline-studio?ref=badge" target="_blank" rel="noopener">
-  <img src="https://toolindex.net/badge/timeline-studio/small.svg?theme=dark" alt="Timeline Studio - Listed on Tool Index" width="130" height="30" />
-</a>
+ClipCraft AI is a local-first AI video editor that runs in the browser. It combines a multi-track timeline with AI voiceovers, automatic captions, AI music, smart framing, talking avatars, visual effects, and deterministic video export — without uploading your project media to an editing server.
 
-## Create with Anna
+- **Live application:** <https://clip-craft-ai-weld.vercel.app>
+- **Source code:** <https://github.com/mirageapp123/ClipCraft-AI>
 
-Try the Anna edition for AI-assisted editing and project continuity:
+ClipCraft AI is an independent application built on the MIT-licensed Timeline Studio codebase. See [License and attribution](#license-and-attribution).
 
-- Describe your edit to Anna, review a plan based on your brief and clip metadata, then apply supported clip ordering and simple 1× video trims.
-- Projects and media save automatically to Anna cloud storage and can resume with the same Anna account in another browser. Local project checkpoints provide an additional recovery option.
-- Refine the editable multi-track timeline, add AI voiceovers and manual captions, and export MP4 using an available browser encoder.
+## What ClipCraft AI does
 
-This desktop preview plans from metadata, without analyzing video frames or audio; local AI features depend on the Anna container’s capabilities.
+ClipCraft AI is a complete editing workspace, not a one-click generator. You can import media, arrange it on a multi-track timeline, generate a voiceover, add automatic or manual captions, apply effects and keyframes, mix audio, and export the finished video — all inside a modern browser.
 
-→ [Try Timeline Studio on Anna](https://anna.partners/store/@martindelophy/timeline-studio)
+Core editing is local-first: playback uses native browser media, and export uses a separate deterministic rendering path so the exported result matches the preview.
 
-遇到任何问题，欢迎扫码进群交流。我们急需你的建议和反馈！
+## Features
 
-Run into any issues? Scan the QR code to join our WeChat group. We really need your suggestions and feedback!
-
-<img src="docs/images/wechat-feedback-qr.png" alt="WeChat group QR code" width="280" />
-
-## Responsible use of deep synthesis
-
-This tool uses deep-synthesis technology and is intended solely for technical research and learning.
-
-Users must ensure that they:
-
-- use only facial images or videos of themselves or people who have provided lawful authorization;
-- do not create or distribute any illegal, infringing, false, or misleading content;
-- do not present generated content as authentic footage or impersonate another person without their consent.
-
-Users are solely responsible for any legal liability arising from violations of these requirements.
-
-## Project updates
-
-- **2026-10-30** — Added preview-video context menus for canvas alignment, fit/fill, overlay start/end alignment, and manual reference-frame synchronization, with undo and locked-track protection.
-- **2026-10-24** — Replaced model-based HD restoration with adjustable local contrast and edge enhancement at original resolution, with before/after comparison and saved settings. Comparison playback uses one audible source stream, and enhancement status copy is consistent. Direct frame transfer and reusable buffers now avoid per-frame PNG round trips while keeping the enhancement algorithm unchanged. Detail enhancement now runs luminance, blur and edge processing on WebGPU, prefers a high-performance GPU, and falls back to the CPU when unavailable; the workspace shows the actual backend.
-- **2026-10-21** — Integrated saved source-scene analysis, reviewed execution plans, evidence-linked transcript summaries and optional offline visual search (#112–#115). Offline runtimes require separate preparation. [#112–#115](docs/material-analysis.md).
-- **2026-10-21** — Added editable Jianying Pro draft export through the local host and CLI, including transform keyframes and compatibility reports; targets domestic Jianying Pro 11.6.0 on macOS.
-- **2026-10-20** — Added an optional macOS local host with durable project saving, active-session renewal and recoverable write leases. The browser editor remains available. [Setup and limits](docs/local-host.md).
-See the public [Roadmap](ROADMAP.md) for planned work, [Releases](https://github.com/MartinDelophy/ai-video-editor/releases) for shipped changes, and [Issues](https://github.com/MartinDelophy/ai-video-editor/issues) for focused tasks and bugs.
-
-## What can it produce?
-
-Explore reproducible before/after examples and editing recipes:
-
-→ [AI Video Editing Skills Handbook](https://github.com/MartinDelophy/timeline-studio-handbook)
-
-<p align="center">
-  <a href="https://trendshift.io/repositories/77422?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-77422" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/77422/daily?language=JavaScript" alt="MartinDelophy%2Fai-video-editor | Trendshift" width="250" height="55"/></a>
-  <a href="https://trendshift.io/repositories/77422?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-77422" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/77422/weekly?language=JavaScript" alt="MartinDelophy%2Fai-video-editor | Trendshift" width="250" height="55"/></a>
-</p>
-
-Timeline Studio is a local-first AI video editor that runs in the browser. It combines a CapCut-style multi-track timeline with WebGPU AI music and repair, multilingual voiceovers, automatic captions, talking-avatar generation, and deterministic offline export.
-
-[Open the editor](https://video-editor.ai-creator.top/) · [Watch on YouTube](https://youtu.be/bqKhpPPa-qo) · [Hugging Face Space](https://huggingface.co/spaces/haixin/timeline-studio)
-
-## Video demo
-
-### Auto Edit
-
-Visual analysis, keyframes, captions, and export.
-
-https://github.com/user-attachments/assets/e8327caa-429e-40ff-a7fe-a59e6cf7a464
-
-### AI Repair
-
-Timed watermark removal with before/after review.
-
-https://github.com/user-attachments/assets/aea9f5b4-c720-4b0c-9067-5ec124eef982
-
-### AI Voiceover
-
-https://github.com/user-attachments/assets/304a744e-d620-4380-9c17-19af3726f5a4
-
-![Timeline Studio editor](docs/screenshots/editor-timeline.png)
-
-## AI capabilities
-
-- **Multilingual voiceover:** Chinese and mixed Chinese/English Hojo TTS Light 80M FP16 reference voices (晴岚 and 若溪), with autoregressive generation on WebGPU and stable waveform decoding on WASM; English Kokoro 82M; and browser Piper voices for German, Spanish, French, Italian, and Brazilian Portuguese.
-- **Local AI music:** Stable Audio 3 Small Q4 ONNX runs through WebGPU with translated free-form prompts, 30/60/90/120-second choices, waveform-aware long-track looping, persistent model caching, and automatic insertion into My Assets.
-- **Automatic captions:** Whisper small q8 ONNX with waveform-aware timing and conservative Chinese recognition cleanup.
-- **Smart framing:** YOLOS tiny subject detection and MODNet portrait matting for smart crop, caption avoidance, and background removal across images and complete videos.
-- **AI Repair:** browser-local MI-GAN watermark/object removal with multiple timed repair regions, plus NanoVSR 644K WebGPU 4× restoration for images and videos with synchronized before/after comparison.
-- **AI vocal separation:** isolate vocals and place the instrumental stem on the music track without leaving the browser workflow.
-- **Digital human:** JoyVASA audio-to-motion and LivePortrait neural rendering with WebGPU, 256px preview and 512px quality paths.
-- **Local-first inference:** large models are lazy-loaded, revision-pinned, and cached by the service worker; supported workflows run without uploading project media to an editing backend.
-
-## Resilient model delivery
-
-Browser AI models are mirrored on both Hugging Face and ModelScope. Timeline Studio uses ModelScope first for Chinese interfaces and domestic sessions, uses Hugging Face first elsewhere, remembers the first working source for the current runtime, and automatically falls back to the other source when needed. Cache identities are shared across both providers, so switching routes does not download the same revision twice.
-
-- Stable Audio: [Hugging Face](https://huggingface.co/haixin/stable-audio-3-small-music-onnx) · [ModelScope](https://www.modelscope.cn/models/martindelophy/stable-audio-3-small-music-onnx/files?version=main)
-- Voice models: [Hugging Face](https://huggingface.co/haixin/timeline-studio-voice-models/tree/074a57bc4dac9c58568b031898ea79da6f36b282) · [ModelScope](https://www.modelscope.cn/models/martindelophy/timeline-studio-voice-models/files?version=9cb5ab964c014b182701153bd00f7a2202f5dce8) (mixed upstream licenses; see the repository model card)
-- Timeline Studio ONNX models: [Hugging Face](https://huggingface.co/haixin/timeline-studio-onnx-models) · [ModelScope](https://www.modelscope.cn/models/martindelophy/timeline-studio-onnx-models/files?version=main)
-- Depth Anything V2 Small Q4F16: [Hugging Face](https://huggingface.co/haixin/timeline-studio-onnx-models/tree/a0806c6fb9484894dcb78df523156d244461515d/depth-anything-v2-small) · [ModelScope](https://www.modelscope.cn/models/martindelophy/timeline-studio-onnx-models/files?version=4cc757f80330e22cb8f82b628c53ceca6307fd12&subpath=depth-anything-v2-small) (Apache-2.0)
-- Vocal remover: [Hugging Face](https://huggingface.co/haixin/timeline-studio-vocal-remover) · [ModelScope](https://www.modelscope.cn/models/martindelophy/timeline-studio-vocal-remover/files?version=main)
-
-## Editing and export
+### Editing and timeline
 
 - Contiguous main Visuals track plus timed picture-in-picture overlays.
-- Direct canvas selection, movement, proportional resize, rotation, masks, filters, effects, animation, speed, and explicit keyframes, plus desktop four-way color grading with fully keyframeable temperature, tint, saturation, hue, wheel saturation, and luminance controls.
 - Captions, stickers, voiceover, separated source audio, and music on independent timed tracks.
+- Direct canvas selection, movement, proportional resize, rotation, masks, filters, effects, animation, speed, and explicit keyframes.
+- Desktop color grading with keyframeable temperature, tint, saturation, hue, wheel saturation, and luminance.
 - CapCut-style snapping, alignment guides, clip menus, split/duplicate/delete, timeline zoom, undo/redo, and portable `.timeline` projects.
-- Native media playback for a responsive preview; export uses a separate deterministic offline rendering path.
-- WebCodecs MP4/WebM composition with shared preview/export geometry, audio mixing, captions, overlays, effects, and MediaRecorder fallback.
-- Installable PWA with a cached app shell and multilingual UI.
+- Desktop and touch-first mobile layouts.
 
-## Agent Skill
+### Audio and voice
 
-The repository includes the [AI Video Editing Skill for Codex, Claude Code, Copilot and Gemini CLI](skills/edit-timeline-studio/README.md), backed by [`edit-timeline-studio`](skills/edit-timeline-studio/SKILL.md) for planning, executing, and verifying editable video timelines.
+- Multilingual text-to-speech voiceovers with multiple built-in voices.
+- Record your own voice, import audio from your computer, or use generated voiceover clips on the timeline.
+- AI vocal separation: isolate vocals and place the instrumental on the music track.
+- Per-clip volume, fades, speed, and spatial controls.
 
-It helps an agent:
+### Captions
 
-- inspect media and preserve the user's editing brief;
-- describe reversible edits with stable clip IDs and explicit timestamps;
-- operate the hosted or local editor through the browser compatibility path;
-- validate declarative edit plans with `skills/edit-timeline-studio/scripts/validate_edit_plan.mjs`;
-- verify track placement, transitions, captions, overlays, audible audio, and final export artifacts;
-- keep the editable `.timeline` project as the source of truth instead of returning only an opaque render.
+- Automatic captions with Whisper running locally in the browser.
+- Manual caption editing, caption styles, caption fonts, and timeline timing controls.
+- Caption-linked voiceovers that align generated speech to caption clips.
 
-The versioned headless command runner loads and inspects portable projects, validates revisioned JSON plans, applies supported operations transactionally, supports dry runs and idempotent operation IDs, and writes a new `.timeline` archive without rewriting its media files. It also renders the documented portable Visuals + Voiceover + Music subset to a verified H.264/AAC MP4. Browser control remains the compatibility path for operations that are not in the command registry yet. The [browser WebMCP integration](docs/webmcp.md) provides 21 tools for the open project: structured inspection, 26 reviewed visual/caption/audio/marker/framing operations, existing-asset and picture-in-picture insertion, rendered frame/audio sampling, local voiceover/transcription jobs, guarded undo, project saving, and real video export with prepared settings, progress, output receipts and cancellation.
+### Visual AI
+
+- **Smart framing:** subject detection and portrait matting for smart crop, caption avoidance, and background removal.
+- **AI Repair:** browser-local object/watermark removal and detail restoration with before/after comparison.
+- **AI music:** prompt-based music generation with selectable durations and automatic insertion into My Assets.
+- **Digital human:** audio-to-motion and neural portrait rendering for talking-avatar clips.
+- **Depth and parallax effects** for photos and video.
+
+### Export
+
+- WebCodecs-based MP4/WebM composition with a MediaRecorder fallback.
+- Shared preview/export geometry, audio mixing, captions, overlays, effects, and filters.
+- Optional audio-only export.
+- Installable progressive web app (PWA) with a cached app shell.
+
+### Languages
+
+The interface is available in multiple languages, including English, Chinese, Japanese, Korean, Spanish, French, German, Portuguese, Thai, Vietnamese, and Russian.
+
+## Screenshots
+
+The repository includes current UI captures under [`docs/screenshots`](docs/screenshots).
+
+### Editor and timeline
+
+![ClipCraft AI editor timeline](docs/screenshots/editor-timeline.png)
+
+### Voiceover and captions aligned on the timeline
+
+![Voiceover and captions aligned](docs/screenshots/voice-caption-alignment.png)
+
+### Export progress
+
+![Export progress](docs/screenshots/export-progress.png)
+
+> If these images do not match your build, replace them with fresh captures. The paths above are the intended documentation placeholders.
+
+## Technology
+
+ClipCraft AI is built with:
+
+- **React 19** and **Vite 6** for the web application.
+- **JavaScript/JSX** for the editor UI, with **TypeScript** for the optional local host.
+- **ONNX Runtime Web** and **Transformers.js** for in-browser AI inference.
+- **WebGPU** and **WebAssembly** for accelerated local model execution.
+- **WebCodecs**, **Mediabunny**, **FFmpeg.wasm**, and **libav.js** for media decoding, encoding, and compatibility handling.
+- **Kokoro**, **Piper**, and **Hojo TTS** voice engines for text-to-speech.
+- **Whisper** for speech recognition and caption timing.
+- **Zod** for local host request validation and **Fastify** for the optional local service.
+- **Phosphor Icons** for the interface icon set.
+- A service worker for model/app caching and PWA installation.
+
+Large AI models are downloaded on demand, cached by the browser, and pinned to immutable revisions. No API keys are required for the core browser workflows.
+
+## Getting started
+
+### Requirements
+
+- Node.js 20 or newer
+- npm
+- A modern Chromium-based browser (Chrome or Edge recommended)
+- WebGPU-capable hardware for the heaviest AI workflows (optional; most editing works without it)
+
+### Install and run locally
 
 ```bash
-npm run agent -- project.inspect /absolute/path/project.timeline
-npm run agent -- track.inspect /absolute/path/project.timeline visuals
-npm run agent -- clip.inspect /absolute/path/project.timeline visual-123
-npm run agent -- transcript.inspect /absolute/path/project.timeline voice-123
-npm run agent -- project.diff /absolute/path/edit-plan.json
-npm run agent -- project.run /absolute/path/edit-plan.json
-npm run agent -- project.render /absolute/path/render-request.json
-```
-
-The legacy `inspect` and `run` aliases remain available. The write registry supports ffprobe-backed, hashed visual/audio import to Visuals, Music, or the portable Voiceover slot, plus transactional timed edits, captions, source-accurate Visuals/Overlays, transitions, validated properties, track state, and ratio changes. Read commands return project, track, clip, transcript, media-inventory, and field-level predicted diffs. See the [command contract](skills/edit-timeline-studio/references/command-contract.md) for the plan envelope.
-
-Install through the public [skills.sh](https://skills.sh/MartinDelophy/ai-video-editor) directory (the current CLI requires Node.js 22.20.0 or later):
-
-```bash
-npx skills add MartinDelophy/ai-video-editor --skill edit-timeline-studio
-```
-
-Or install it with GitHub CLI 2.90.0 or later:
-
-```bash
-# Claude Code
-gh skill install MartinDelophy/ai-video-editor edit-timeline-studio --agent claude-code --scope user
-
-# Codex
-gh skill install MartinDelophy/ai-video-editor edit-timeline-studio --agent codex --scope user
-```
-
-To install the tested release instead of following the latest release, add `--pin v1.0.8`. Preview the Skill before installing with:
-
-```bash
-gh skill preview MartinDelophy/ai-video-editor edit-timeline-studio
-```
-
-## Roadmap
-
-- **Now:** expand the versioned command registry, harden deterministic offline export, and improve timeline editing reliability.
-- **Next:** expand headless render parity and the reviewed browser WebMCP command subset.
-- **Later:** add collaborative review workflows, a plugin extension surface, and more locally verified AI models.
-
-Roadmap priorities are shaped in [GitHub Discussions](https://github.com/MartinDelophy/ai-video-editor/discussions). Feature requests and real-world workflow feedback are welcome.
-
-## Help wanted
-
-Timeline Studio is looking for contributors interested in browser media, WebCodecs, WebGPU/ONNX, timeline UX, localization, testing, and documentation.
-
-- Try the [live editor](https://video-editor.ai-creator.top/) and report reproducible bugs in [Issues](https://github.com/MartinDelophy/ai-video-editor/issues).
-- Join [Discussions](https://github.com/MartinDelophy/ai-video-editor/discussions) to propose features, share projects, or help prioritize the roadmap.
-- Read the [contribution guide](CONTRIBUTING.md) for setup, validation, and first-contribution guidance.
-- Contributions of focused fixes, tests, translations, documentation, and example projects are especially useful.
-
-## Quick start
-
-Requirements: Node.js 20+ and a modern Chromium browser. WebGPU is recommended for the heaviest AI workflows.
-
-```bash
-git clone https://github.com/MartinDelophy/ai-video-editor.git
-cd ai-video-editor
+git clone https://github.com/mirageapp123/ClipCraft-AI.git
+cd ClipCraft-AI
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. The first AI run may download model files; later runs reuse the browser cache.
+Open the local URL printed by Vite (usually `http://localhost:5173`).
 
-## Validate and build
+The first AI run may download model files. Later runs reuse the browser cache.
+
+### Build and preview
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Run the complete repository check with:
+### Validate the repository
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+Or run the complete check:
 
 ```bash
 npm run check
@@ -209,25 +140,66 @@ npm run check
 
 ## Deploy
 
-The included [`netlify.toml`](netlify.toml) builds with `npm run build`, publishes `dist`, enables the cross-origin isolation headers required by browser AI/media workers, and provides the SPA fallback.
+The repository includes [`vercel.json`](vercel.json) with SPA rewrites for the legal pages (`/privacy-policy` and `/terms-of-service`) so they resolve on Vercel.
+
+Deploy the production build to Vercel:
 
 ```bash
-npx netlify-cli deploy --prod --dir=dist
+npm run build
+npx vercel deploy --prod
 ```
 
-## Support and feedback
+Or connect the GitHub repository to Vercel and let it run `npm run build` with `dist` as the output directory.
 
-If this project helps you, please consider giving it a ⭐ Star. If you encounter a problem, please [open an Issue](https://github.com/MartinDelophy/ai-video-editor/issues).
+## Project structure
 
-Join our [Discord community](https://discord.gg/uq2uvUTBr) to ask questions, share feedback, and connect with other users and contributors.
+```text
+src/            React editor UI, hooks, and browser AI runtimes
+apps/host/      Optional local host service (TypeScript, Fastify)
+apps/launcher/  Local launcher
+docs/           Technical documentation and screenshots
+skills/         Agent skill definitions for timeline automation
+scripts/        Build, serving, and timeline command-line tools
+```
 
-## License
+## Browser support
 
-Timeline Studio's original source code is licensed under the [MIT License](LICENSE).
+ClipCraft AI targets current Chromium-based browsers. Some workflows (WebGPU inference, certain codecs, and large model caches) depend on the browser version, GPU, and available memory. Safari and Firefox may support basic editing with reduced AI capability.
 
-The MIT License does **not** automatically apply to third-party models, model
-weights, datasets, fonts, stock media, or other bundled or remotely downloaded
-assets. Those materials remain subject to their respective upstream licenses
-and terms, regardless of where they are hosted or how they are downloaded or
-integrated. Review [MODEL_LICENSES.md](MODEL_LICENSES.md) before redistribution
-or commercial use.
+## Responsible use of deep synthesis
+
+This tool uses deep-synthesis technology and is intended for lawful creative and technical work.
+
+Users must ensure that they:
+
+- use only facial images or videos of themselves or people who have provided lawful authorization;
+- do not create or distribute illegal, infringing, false, or misleading content;
+- do not present generated content as authentic footage or impersonate another person without consent.
+
+Users are solely responsible for any legal liability arising from their use of the application.
+
+## Contributing
+
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, coding practices, and pull request guidelines. By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+- Report bugs: <https://github.com/mirageapp123/ClipCraft-AI/issues>
+- Request features: <https://github.com/mirageapp123/ClipCraft-AI/issues>
+
+Do not include private media, credentials, or personal information in issues or pull requests.
+
+## License and attribution
+
+ClipCraft AI is distributed under the [MIT License](LICENSE).
+
+The original source code this project is based on is copyright © 2026 **MartinDelophy** (Timeline Studio) and is used under the MIT License. The original copyright notice and permission notice are retained in [`LICENSE`](LICENSE). Any distribution of this project or a substantial portion of it must keep that notice.
+
+ClipCraft AI's own modifications, branding, documentation, and application-specific features are provided under the same MIT License unless stated otherwise. Nothing in this repository claims ownership of the upstream Timeline Studio code.
+
+The MIT License does **not** automatically apply to third-party models, model weights, datasets, fonts, stock media, or other bundled or remotely downloaded assets. Those materials remain subject to their respective upstream licenses and terms. Review [`MODEL_LICENSES.md`](MODEL_LICENSES.md) before redistribution or commercial use.
+
+Model repositories, service names, and links that retain the `timeline-studio` identifier refer to the upstream model hosting used by this codebase. They are kept for attribution and because the application downloads those artifacts.
+
+## Acknowledgements
+
+- Timeline Studio and its contributors for the original MIT-licensed editor.
+- The maintainers of the open models, fonts, and libraries used by the browser AI workflows.

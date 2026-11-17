@@ -1,3 +1,5 @@
+> **Note:** This localized README is retained from the upstream Timeline Studio project and has not yet been fully updated for ClipCraft AI. For current setup, features, links, and licensing, read the English [README.md](README.md). Original Timeline Studio attribution remains in [LICENSE](LICENSE).
+
 # Timeline Studio — 浏览器 AI 视频编辑器
 
 [English](README.md) | **中文** | [日本語](README.ja.md) | [한국어](README.ko.md) | [Español](README.es.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Português](README.pt-BR.md) | [ไทย](README.th.md) | [Tiếng Việt](README.vi.md) | [Русский](README.ru.md)

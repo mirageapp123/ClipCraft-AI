@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible bug in ClipCraft AI
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Do not include private media, credentials, API keys, or personal information.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the editor
+        2. Import ...
+        3. Click ...
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 132 on Windows 11
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device or GPU (if relevant)
+      placeholder: MacBook Pro M2 / NVIDIA RTX 3060
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors or screenshots
+      description: Paste relevant console output or attach screenshots/recordings.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues before opening this report.
+          required: true
+        - label: I did not include private media, credentials, or personal information.
+          required: true

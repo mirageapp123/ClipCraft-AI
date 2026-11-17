@@ -1,9 +1,11 @@
 ---
 title: "I Built a Local-First AI Video Editor That Runs in the Browser"
 published: false
-description: "How Timeline Studio combines React, ONNX Runtime Web, Whisper, WebGPU, and a real multi-track timeline to create voiceovers, captions, vision effects, and talking avatars locally."
+description: "How Timeline Studio's browser AI stack combines React, ONNX Runtime Web, Whisper, WebGPU, and a real multi-track timeline to create voiceovers, captions, vision effects, and talking avatars locally."
 tags: webdev, ai, react, opensource
 ---
+
+> **Historical note:** This article was written about the upstream Timeline Studio project. ClipCraft AI is the current application built on that MIT-licensed codebase. See [README.md](../README.md) for current documentation and links.
 
 What if an AI video editor did not need to upload your media to a server before it could do anything useful?
 

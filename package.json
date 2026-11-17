@@ -1,16 +1,16 @@
 {
-  "name": "web-player",
+  "name": "clipcraft-ai",
   "version": "1.0.0",
   "private": true,
-  "description": "A local-first browser AI video editor for WebGPU AI music, AI repair, voiceovers, captions, talking avatars, and deterministic export.",
+  "description": "ClipCraft AI — a local-first browser AI video editor with a multi-track timeline, voiceovers, captions, AI music, visual effects, and deterministic export.",
   "license": "MIT",
-  "homepage": "https://video-editor.ai-creator.top/",
+  "homepage": "https://clip-craft-ai-weld.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MartinDelophy/ai-video-editor.git"
+    "url": "https://github.com/mirageapp123/ClipCraft-AI.git"
   },
   "bugs": {
-    "url": "https://github.com/MartinDelophy/ai-video-editor/issues"
+    "url": "https://github.com/mirageapp123/ClipCraft-AI/issues"
   },
   "type": "module",
   "scripts": {

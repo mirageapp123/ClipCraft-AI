@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Live application
+    url: https://clip-craft-ai-weld.vercel.app
+    about: Try ClipCraft AI in your browser.
+  - name: Documentation
+    url: https://github.com/mirageapp123/ClipCraft-AI#readme
+    about: Read the setup guide, feature overview, and license notes.

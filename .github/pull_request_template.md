@@ -22,3 +22,6 @@
 ## Contributor note
 
 <!-- First contribution? Tell us if you would like extra review guidance. -->
+
+- [ ] I have read the [Code of Conduct](../CODE_OF_CONDUCT.md).
+- [ ] I preserved existing copyright, license, and third-party notices.

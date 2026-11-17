@@ -60,24 +60,6 @@ Core editing is local-first: playback uses native browser media, and export uses
 
 The interface is available in multiple languages, including English, Chinese, Japanese, Korean, Spanish, French, German, Portuguese, Thai, Vietnamese, and Russian.
 
-## Screenshots
-
-The repository includes current UI captures under [`docs/screenshots`](docs/screenshots).
-
-### Editor and timeline
-
-![ClipCraft AI editor timeline](docs/screenshots/editor-timeline.png)
-
-### Voiceover and captions aligned on the timeline
-
-![Voiceover and captions aligned](docs/screenshots/voice-caption-alignment.png)
-
-### Export progress
-
-![Export progress](docs/screenshots/export-progress.png)
-
-> If these images do not match your build, replace them with fresh captures. The paths above are the intended documentation placeholders.
-
 ## Technology
 
 ClipCraft AI is built with:

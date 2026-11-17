@@ -14,7 +14,10 @@ export function useFileUpload(deps) {
   return useCallback((files) => {
     const mediaFiles = Array.from(files ?? []).filter((file) =>
       SUPPORTED_MEDIA_TYPES.some((type) => file.type.startsWith(type)) || isSupportedMediaFile(file));
-    if (!mediaFiles.length) return void deps.notify("请选择图片、视频或音频素材");
+    if (!mediaFiles.length) {
+      deps.notify("请选择图片、视频或音频素材");
+      return [];
+    }
     const assets = mediaFiles.map((file) => {
       const src = URL.createObjectURL(file); deps.imageUrlRefs.current.add(src);
       const type = getMediaFileKind(file);
@@ -139,5 +142,6 @@ export function useFileUpload(deps) {
         ? `${primary.type === "video" ? "Video" : "Image"} added to the canvas and timeline`
         : `${primary.type === "video" ? "Video" : "Image"} added to the media library, drag it to the Visuals or picture-in-picture track`
       : "Audio uploaded to the media library, drag it to the music or voiceover track");
+    return assets;
   }, [deps]);
 }

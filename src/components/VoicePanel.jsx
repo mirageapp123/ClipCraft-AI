@@ -63,6 +63,7 @@ import { createPortal } from "react-dom";
 import { formatTime, getSegmentStartTime } from "../lib/timeline.js";
 import { decodeWaveform } from "../lib/media.js";
 import { AudioClipExportControl } from "./AudioClipExportControl.jsx";
+import { AudioImportButton } from "./AudioImportButton.jsx";
 import { SilenceRemovalPanel } from "./SilenceRemovalPanel.jsx";
 import { cancelOpenVoiceTasks, convertVoiceBlob, extractVoiceEmbedding } from "../lib/openVoiceRuntime.js";
 import { LIVE_PORTRAIT_WEB_MODEL } from "../config/livePortrait.js";
@@ -1459,6 +1460,7 @@ export function VoicePanel({
   audioBlob,
   generateVoiceover,
   downloadBlob,
+  onImportAudioFile,
   favoriteVoiceIds,
   setFavoriteVoiceIds,
   voiceProfiles,
@@ -1596,21 +1598,14 @@ export function VoicePanel({
     isBusy: smartModelBusy,
   } = useVoiceModelDownload({ notify, t });
   const {
-    download: handleSmartDownloadAudio,
     state: smartAudioState,
     message: smartAudioMessage,
-    isBusy: smartAudioBusy,
   } = useVoiceoverAudioDownload({ notify, t });
-  const smartGenerationBlocked = status === "generating" || status === "captioning";
-  const smartAudioDisabled = !audioBlob || smartGenerationBlocked || smartAudioBusy;
   const smartModelButtonText = smartModelState === "packaging"
     ? t("voiceModelPackaging", "Packaging voice model…")
     : smartModelBusy
       ? `${t("downloading", "Downloading")} ${Math.round(smartVoiceProgress)}%`
       : t("downloadVoiceModel", "Download voice model");
-  const smartAudioButtonText = smartAudioBusy
-    ? t("preparingDownload", "Preparing…")
-    : t("downloadAudio", "Download audio");
   const selectedVoiceProfile = voiceProfiles.find((profile) => profile.id === selectedVoiceProfileId) || null;
   const panelRef = useRef(null);
   const panelContext = selectedTrackAudioSegment?.embeddedVideo && ((activeTool === "audio" && !mobileInspectorOrigin) || ["audio", "spatial"].includes(mobileInspectorSection)) ? "audio" : resolveInspectorPanelContext({
@@ -2011,6 +2006,7 @@ export function VoicePanel({
               progressPercent={progressPercent}
               audioBlob={selectedCaptionAudioSegment?.blob ?? null}
               audioUrl={selectedCaptionAudioSegment?.url ?? ""}
+              onImportAudioFile={onImportAudioFile}
               generateVoiceover={() => selectedCaptionSegment && generateVoiceover(selectedCaptionSegment)}
               downloadBlob={downloadBlob}
               favoriteVoiceIds={favoriteVoiceIds}
@@ -2103,17 +2099,14 @@ export function VoicePanel({
                   </>
                 )}
               </button>
-              {audioBlob && (
-                <button
-                  className="secondary-download"
-                  type="button"
-                  disabled={smartAudioBusy}
-                  onClick={() => handleSmartDownloadAudio(audioBlob)}
-                >
-                  {smartAudioBusy ? <i className="generate-button-spinner" aria-hidden="true" /> : <DownloadSimple size={17} />}
-                  {t("download", "Download")}
-                </button>
-              )}
+              <AudioImportButton
+                className="secondary-download"
+                iconSize={17}
+                label={t("downloadAudio", "Download audio")}
+                onImportAudioFile={onImportAudioFile}
+                notify={notify}
+                t={t}
+              />
             </div>
             {smartAudioMessage ? (
               <small className={`voice-download-status${smartAudioState === "error" ? " is-error" : smartAudioState === "done" ? " is-success" : ""}`} role="status">
@@ -2172,17 +2165,14 @@ export function VoicePanel({
                     </>
                   )}
                 </button>
-                {audioBlob ? (
-                  <button
-                    className="secondary-download"
-                    type="button"
-                    disabled={smartAudioBusy}
-                    onClick={() => handleSmartDownloadAudio(audioBlob)}
-                  >
-                    {smartAudioBusy ? <i className="generate-button-spinner" aria-hidden="true" /> : <DownloadSimple size={17} />}
-                    {t("download", "Download")}
-                  </button>
-                ) : null}
+                <AudioImportButton
+                  className="secondary-download"
+                  iconSize={17}
+                  label={t("downloadAudio", "Download audio")}
+                  onImportAudioFile={onImportAudioFile}
+                  notify={notify}
+                  t={t}
+                />
               </div>
               {smartAudioMessage ? (
                 <small className={`voice-download-status${smartAudioState === "error" ? " is-error" : smartAudioState === "done" ? " is-success" : ""}`} role="status">
@@ -2379,16 +2369,13 @@ export function VoicePanel({
                   )}
                   {smartModelButtonText}
                 </button>
-                <button
+                <AudioImportButton
                   className="panel-secondary"
-                  type="button"
-                  disabled={smartAudioDisabled}
-                  title={!audioBlob ? t("audioDownloadUnavailable", "Generate a voiceover first, then download it.") : undefined}
-                  onClick={() => handleSmartDownloadAudio(audioBlob)}
-                >
-                  {smartAudioBusy ? <i className="generate-button-spinner" aria-hidden="true" /> : <DownloadSimple size={16} />}
-                  {smartAudioButtonText}
-                </button>
+                  label={t("downloadAudio", "Download audio")}
+                  onImportAudioFile={onImportAudioFile}
+                  notify={notify}
+                  t={t}
+                />
                 {selectedVoiceProfile ? (
                   <button className="panel-secondary" type="button" onClick={() => setSelectedVoiceProfileId("")}>
                     {t("useDefaultVoice", "Use default voice")}
@@ -2434,6 +2421,7 @@ export function VoicePanel({
             progressPercent={progressPercent}
             audioBlob={audioBlob}
             audioUrl={audioUrl}
+            onImportAudioFile={onImportAudioFile}
             generateVoiceover={generateVoiceover}
             downloadBlob={downloadBlob}
             favoriteVoiceIds={favoriteVoiceIds}

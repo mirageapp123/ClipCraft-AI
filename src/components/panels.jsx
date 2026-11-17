@@ -64,6 +64,7 @@ import {
 } from "../lib/geminiNanoVector.js";
 import { getRemoteAssetBlob } from "../lib/remoteAssetCache.js";
 import { downloadBlob as downloadMediaBlob } from "../lib/media.js";
+import { AudioImportButton } from "./AudioImportButton.jsx";
 import { useVoiceModelDownload, useVoiceoverAudioDownload } from "../hooks/useVoiceDownloads.js";
 import { VoiceSelect } from "./VoiceSelect.jsx";
 import { releasePointerActivatedFocus } from "../lib/editorShortcuts.js";
@@ -2592,6 +2593,7 @@ export function VoiceSynthesisPanel({
   progressPercent,
   audioBlob,
   audioUrl,
+  onImportAudioFile,
   generateVoiceover,
   downloadBlob,
   favoriteVoiceIds,
@@ -2614,26 +2616,19 @@ export function VoiceSynthesisPanel({
     isBusy: modelBusy,
   } = useVoiceModelDownload({ notify, t });
   const {
-    download: downloadVoiceAudio,
     state: audioState,
     message: audioMessage,
-    isBusy: audioBusy,
   } = useVoiceoverAudioDownload({ notify, t });
   const currentVoiceName = selectedVoiceProfile?.name || selectedVoice?.name || "";
   const currentVoiceLanguage = selectedVoiceProfile
     ? t("cloneVoiceMultilingual", "Cloned voice")
     : selectedVoice?.language || "";
-  const generationBlocked = status === "generating" || status === "captioning";
-  const audioUnavailable = !audioBlob;
-  const audioDisabled = audioUnavailable || generationBlocked || audioBusy;
   const modelButtonText = modelState === "packaging"
     ? t("voiceModelPackaging", "Packaging voice model…")
     : modelBusy
       ? `${t("downloadingModel", "Downloading model")} ${Math.round(modelProgress)}%`
       : t("downloadVoiceModel", "Download voice model");
-  const audioButtonText = audioBusy
-    ? t("preparingDownload", "Preparing…")
-    : t("downloadAudio", "Download audio");
+  const audioButtonText = t("downloadAudio", "Download audio");
 
   return (
     <>
@@ -2671,16 +2666,13 @@ export function VoiceSynthesisPanel({
           {modelBusy ? <i className="generate-button-spinner" aria-hidden="true" /> : <DownloadSimple size={16} weight="bold" />}
           {modelButtonText}
         </button>
-        <button
+        <AudioImportButton
           className="panel-secondary"
-          type="button"
-          disabled={audioDisabled}
-          title={audioUnavailable ? t("audioDownloadUnavailable", "Generate a voiceover first, then download it.") : undefined}
-          onClick={() => downloadVoiceAudio(audioBlob)}
-        >
-          {audioBusy ? <i className="generate-button-spinner" aria-hidden="true" /> : <DownloadSimple size={16} weight="bold" />}
-          {audioButtonText}
-        </button>
+          label={audioButtonText}
+          onImportAudioFile={onImportAudioFile}
+          notify={notify}
+          t={t}
+        />
         {selectedVoiceProfile ? (
           <button className="panel-secondary" type="button" onClick={clearSelectedVoiceProfile}>
             {t("useDefaultVoice", "Use default voice")}
@@ -2734,16 +2726,14 @@ export function VoiceSynthesisPanel({
           {status === "generating" ? <i className="generate-button-spinner" aria-hidden="true" /> : <Waveform size={18} weight="bold" />}
           {status === "generating" ? t("generating") : audioBlob ? t("regenerateVoice") : t("generateVoice")}
         </button>
-        <button
+        <AudioImportButton
           className="secondary-download"
-          type="button"
-          aria-label={audioButtonText}
-          disabled={audioDisabled}
-          title={audioUnavailable ? t("audioDownloadUnavailable", "Generate a voiceover first, then download it.") : undefined}
-          onClick={() => downloadVoiceAudio(audioBlob)}
-        >
-          {audioBusy ? <i className="generate-button-spinner" aria-hidden="true" /> : <DownloadSimple size={17} />}
-        </button>
+          ariaLabel={audioButtonText}
+          iconSize={17}
+          onImportAudioFile={onImportAudioFile}
+          notify={notify}
+          t={t}
+        />
       </div>
       {audioBlob && audioUrl ? (
         <div className="generated-voice-result" aria-live="polite">

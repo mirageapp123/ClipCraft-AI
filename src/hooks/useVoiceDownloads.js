@@ -3,8 +3,9 @@ import {
   buildVoiceModelPack,
   isModelDownloadError,
   isUsableAudioBlob,
+  saveBlobWithSavePicker,
   triggerBlobDownload,
-  triggerVoiceoverDownload,
+  voiceoverFilename,
 } from "../lib/voiceDownloads.js";
 
 function formatBytes(bytes) {
@@ -31,13 +32,13 @@ export function useVoiceoverAudioDownload({ notify, t } = {}) {
     setState("preparing");
     setMessage(t?.("audioPreparingDownload", "Preparing audio download…") || "Preparing audio download…");
     try {
-      // Let React paint the preparing state before the browser starts the file
-      // handoff. This is also where an unsupported/empty blob is caught above.
-      await new Promise((resolve) => {
-        if (globalThis.requestAnimationFrame) globalThis.requestAnimationFrame(() => resolve());
-        else globalThis.setTimeout(resolve, 0);
-      });
-      const filename = triggerVoiceoverDownload(blob, baseName);
+      const result = await saveBlobWithSavePicker(blob, voiceoverFilename(blob, baseName));
+      if (result.cancelled) {
+        setState("idle");
+        setMessage("");
+        return false;
+      }
+      const filename = result.filename;
       setState("done");
       const done = t?.("audioDownloaded", "Voiceover audio downloaded") || "Voiceover audio downloaded";
       setMessage(`${done} · ${filename}`);

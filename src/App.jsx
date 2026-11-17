@@ -1358,6 +1358,27 @@ export function App({ hostSession = null }) {
     setSelectedVisualSegmentId, setVisualSegments, trackScrollRef, resolveVisualDropIntent, updateVisualAssetInTimeline,
     t, timelineDuration, triggerAssetDropPulse, visualSegments,
   });
+  // Imports an audio file picked from the user's computer (File Explorer) and
+  // places it on the voiceover track so captions and the Audio panel can use it.
+  const importAudioFileFromComputer = async (file) => {
+    const name = String(file?.name || "");
+    const isAudio = Boolean(file) && (
+      String(file.type || "").startsWith("audio/")
+      || /\.(mp3|wav|m4a|aac|ogg|opus|flac|webm|mka)$/i.test(name)
+    );
+    if (!isAudio) {
+      notify(t("audioImportUnsupported", "Unsupported file. Choose an MP3, WAV, M4A, AAC or OGG audio file."));
+      return null;
+    }
+    const created = handleFiles([file]);
+    const asset = created?.find((item) => item.type === "audio") || null;
+    if (!asset) {
+      notify(t("audioImportFailed", "Could not import that audio file. Please try another one."));
+      return null;
+    }
+    await applyAssetToTrack(asset, "audio");
+    return asset;
+  };
   const addVisualOverlay = (asset, options = {}) => {
     if (!asset?.src || (asset.type !== "image" && asset.type !== "video")) return;
     const startTime = Number.isFinite(options.startTime)
@@ -2106,6 +2127,7 @@ export function App({ hostSession = null }) {
           audioBlob={audioBlob}
           generateVoiceover={generateVoiceoverWhenIdle}
           downloadBlob={downloadBlob}
+          onImportAudioFile={importAudioFileFromComputer}
           favoriteVoiceIds={favoriteVoiceIds}
           setFavoriteVoiceIds={setFavoriteVoiceIds}
           voiceProfiles={voiceProfiles}

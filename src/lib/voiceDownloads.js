@@ -45,7 +45,46 @@ export function isUsableAudioBlob(blob) {
 
 export function voiceoverFilename(blob, base = "clipcraft-voiceover") {
   const mime = String(blob?.type || "").split(";")[0].trim().toLowerCase();
-  return `${base}.${AUDIO_EXTENSIONS[mime] || "wav"}`;
+  const stem = String(base || "clipcraft-voiceover").replace(/\.(wav|mp3|webm|ogg|opus|m4a|aac|flac)$/i, "") || "clipcraft-voiceover";
+  return `${stem}.${AUDIO_EXTENSIONS[mime] || "wav"}`;
+}
+
+const SAVE_FILE_TYPES = {
+  wav: { description: "WAV audio", accept: { "audio/wav": [".wav"] } },
+  mp3: { description: "MP3 audio", accept: { "audio/mpeg": [".mp3"] } },
+  webm: { description: "WebM audio", accept: { "audio/webm": [".webm"] } },
+  ogg: { description: "Ogg audio", accept: { "audio/ogg": [".ogg"] } },
+  opus: { description: "Opus audio", accept: { "audio/opus": [".opus"] } },
+  m4a: { description: "M4A audio", accept: { "audio/mp4": [".m4a"] } },
+  aac: { description: "AAC audio", accept: { "audio/aac": [".aac"] } },
+  flac: { description: "FLAC audio", accept: { "audio/flac": [".flac"] } },
+};
+
+// Opens the browser's Save As dialog (the file explorer) when the File System
+// Access API is available, then falls back to a regular download everywhere
+// else. Cancelling the dialog resolves to "cancelled" instead of downloading.
+export async function saveBlobWithSavePicker(blob, filename) {
+  if (!(blob instanceof Blob) || !blob.size) throw new Error("EMPTY_DOWNLOAD");
+  const extension = String(filename || "").split(".").pop()?.toLowerCase() || "";
+  const savePicker = globalThis.showSaveFilePicker;
+  if (typeof savePicker === "function") {
+    try {
+      const handle = await savePicker({
+        suggestedName: filename,
+        types: SAVE_FILE_TYPES[extension] ? [SAVE_FILE_TYPES[extension]] : undefined,
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      return { filename, cancelled: false, picked: true };
+    } catch (error) {
+      if (error?.name === "AbortError") return { filename: "", cancelled: true, picked: true };
+      // Unsupported context (for example a sandboxed frame): use the normal download.
+      console.warn("Save picker unavailable, falling back to a regular download", error);
+    }
+  }
+  triggerBlobDownload(blob, filename);
+  return { filename, cancelled: false, picked: false };
 }
 
 export function triggerBlobDownload(blob, filename) {

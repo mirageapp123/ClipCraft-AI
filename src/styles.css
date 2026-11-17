@@ -13195,6 +13195,16 @@ canvas.relight-position { width:100%; height:auto; display:block; }
 }
 .voice-download-status.is-error { color: #ff8f8f; }
 .voice-download-status.is-success { color: #5fe3c0; }
+.audio-import-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.audio-import-control .voice-download-status {
+  margin-top: 0;
+}
 
 /* Smart captions workspace */
 .smart-captions-panel,

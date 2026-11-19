@@ -12,10 +12,15 @@ export function isEditorInteractiveTarget(target) {
 
 export function isEditorShortcutBlockedByModal() {
   if (typeof document === "undefined") return false;
-  const modal = document.querySelector("[role='dialog']");
-  if (!modal) return false;
-  if (modal.matches(".preview-stage.is-focus-preview")) return false;
-  return true;
+  // Only real modal dialogs should block editing shortcuts. The settings and
+  // export popovers also use role="dialog" but are non-modal, so users can read
+  // the shortcut guide and try the keys without closing the panel first.
+  const modals = document.querySelectorAll("[role='dialog'][aria-modal='true']");
+  for (const modal of modals) {
+    if (modal.matches(".preview-stage.is-focus-preview")) continue;
+    return true;
+  }
+  return false;
 }
 
 export function releasePointerActivatedFocus(event) {

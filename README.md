@@ -60,6 +60,12 @@ Core editing is local-first: playback uses native browser media, and export uses
 
 The interface is available in multiple languages, including English, Chinese, Japanese, Korean, Spanish, French, German, Portuguese, Thai, Vietnamese, and Russian.
 
+## Screenshots
+
+![ClipCraft AI Editor](docs/screenshots/clipcraft-editor.png)
+
+ClipCraft AI – Video Editing Workspace.
+
 ## Technology
 
 ClipCraft AI is built with:
